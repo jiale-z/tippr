@@ -1,19 +1,27 @@
+type Link @model @auth(rules: [{allow: public}]) @key(name: "byUser", fields: ["serverID"]) {
+  id: ID!
+  serverID: ID!
+  Customer: User! @connection
+}
+
 type ServerBio @model @auth(rules: [{allow: public}]) {
   id: ID!
   bio: String
   profile_picture: AWSURL
+  Server: User! @connection
 }
 
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
   serverCode: String
-  name: String
+  name: String!
   DiningPreferences: [DiningPreference] @connection(keyName: "byUser", fields: ["id"])
-  ServerBio: ServerBio @connection
+  CustomerLinks: [Link] @connection(keyName: "byUser", fields: ["id"])
 }
 
 type DiningPreference @model @auth(rules: [{allow: public}]) @key(name: "byUser", fields: ["userID"]) {
   id: ID!
-  userID: ID
+  userID: ID!
   value: String
 }
+ 
