@@ -35,17 +35,21 @@ class DiningPreference extends Model {
     return id;
   }
   
-  String? get userID {
-    return _userID;
+  String get userID {
+    try {
+      return _userID!;
+    } catch(e) {
+      throw new DataStoreException(DataStoreExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage, recoverySuggestion: DataStoreExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion, underlyingException: e.toString());
+    }
   }
   
   String? get value {
     return _value;
   }
   
-  const DiningPreference._internal({required this.id, userID, value}): _userID = userID, _value = value;
+  const DiningPreference._internal({required this.id, required userID, value}): _userID = userID, _value = value;
   
-  factory DiningPreference({String? id, String? userID, String? value}) {
+  factory DiningPreference({String? id, required String userID, String? value}) {
     return DiningPreference._internal(
       id: id == null ? UUID.getUUID() : id,
       userID: userID,
@@ -119,7 +123,7 @@ class DiningPreference extends Model {
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: DiningPreference.USERID,
-      isRequired: false,
+      isRequired: true,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
     

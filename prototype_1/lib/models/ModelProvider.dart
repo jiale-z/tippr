@@ -17,18 +17,20 @@
 
 import 'package:amplify_datastore_plugin_interface/amplify_datastore_plugin_interface.dart';
 import 'DiningPreference.dart';
+import 'Link.dart';
 import 'ServerBio.dart';
 import 'User.dart';
 
 export 'DiningPreference.dart';
+export 'Link.dart';
 export 'ServerBio.dart';
 export 'User.dart';
 
 class ModelProvider implements ModelProviderInterface {
   @override
-  String version = "8cce7ff4ffb50b1becdbd09a08fa77f8";
+  String version = "c351e5267bba88bc1b2a8945455e4ed7";
   @override
-  List<ModelSchema> modelSchemas = [DiningPreference.schema, ServerBio.schema, User.schema];
+  List<ModelSchema> modelSchemas = [DiningPreference.schema, Link.schema, ServerBio.schema, User.schema];
   static final ModelProvider _instance = ModelProvider();
 
   static ModelProvider get instance => _instance;
@@ -37,6 +39,10 @@ class ModelProvider implements ModelProviderInterface {
     switch(modelName) {
     case "DiningPreference": {
     return DiningPreference.classType;
+    }
+    break;
+    case "Link": {
+    return Link.classType;
     }
     break;
     case "ServerBio": {

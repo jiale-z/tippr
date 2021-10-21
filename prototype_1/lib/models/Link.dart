@@ -20,14 +20,13 @@ import 'package:amplify_datastore_plugin_interface/amplify_datastore_plugin_inte
 import 'package:flutter/foundation.dart';
 
 
-/** This is an auto generated class representing the ServerBio type in your schema. */
+/** This is an auto generated class representing the Link type in your schema. */
 @immutable
-class ServerBio extends Model {
-  static const classType = const _ServerBioModelType();
+class Link extends Model {
+  static const classType = const _LinkModelType();
   final String id;
-  final String? _bio;
-  final String? _profile_picture;
-  final User? _Server;
+  final String? _serverID;
+  final User? _Customer;
 
   @override
   getInstanceType() => classType;
@@ -37,30 +36,29 @@ class ServerBio extends Model {
     return id;
   }
   
-  String? get bio {
-    return _bio;
-  }
-  
-  String? get profile_picture {
-    return _profile_picture;
-  }
-  
-  User get Server {
+  String get serverID {
     try {
-      return _Server!;
+      return _serverID!;
     } catch(e) {
       throw new DataStoreException(DataStoreExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage, recoverySuggestion: DataStoreExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion, underlyingException: e.toString());
     }
   }
   
-  const ServerBio._internal({required this.id, bio, profile_picture, required Server}): _bio = bio, _profile_picture = profile_picture, _Server = Server;
+  User get Customer {
+    try {
+      return _Customer!;
+    } catch(e) {
+      throw new DataStoreException(DataStoreExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage, recoverySuggestion: DataStoreExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion, underlyingException: e.toString());
+    }
+  }
   
-  factory ServerBio({String? id, String? bio, String? profile_picture, required User Server}) {
-    return ServerBio._internal(
+  const Link._internal({required this.id, required serverID, required Customer}): _serverID = serverID, _Customer = Customer;
+  
+  factory Link({String? id, required String serverID, required User Customer}) {
+    return Link._internal(
       id: id == null ? UUID.getUUID() : id,
-      bio: bio,
-      profile_picture: profile_picture,
-      Server: Server);
+      serverID: serverID,
+      Customer: Customer);
   }
   
   bool equals(Object other) {
@@ -70,11 +68,10 @@ class ServerBio extends Model {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is ServerBio &&
+    return other is Link &&
       id == other.id &&
-      _bio == other._bio &&
-      _profile_picture == other._profile_picture &&
-      _Server == other._Server;
+      _serverID == other._serverID &&
+      _Customer == other._Customer;
   }
   
   @override
@@ -84,45 +81,41 @@ class ServerBio extends Model {
   String toString() {
     var buffer = new StringBuffer();
     
-    buffer.write("ServerBio {");
+    buffer.write("Link {");
     buffer.write("id=" + "$id" + ", ");
-    buffer.write("bio=" + "$_bio" + ", ");
-    buffer.write("profile_picture=" + "$_profile_picture" + ", ");
-    buffer.write("Server=" + (_Server != null ? _Server!.toString() : "null"));
+    buffer.write("serverID=" + "$_serverID" + ", ");
+    buffer.write("Customer=" + (_Customer != null ? _Customer!.toString() : "null"));
     buffer.write("}");
     
     return buffer.toString();
   }
   
-  ServerBio copyWith({String? id, String? bio, String? profile_picture, User? Server}) {
-    return ServerBio(
+  Link copyWith({String? id, String? serverID, User? Customer}) {
+    return Link(
       id: id ?? this.id,
-      bio: bio ?? this.bio,
-      profile_picture: profile_picture ?? this.profile_picture,
-      Server: Server ?? this.Server);
+      serverID: serverID ?? this.serverID,
+      Customer: Customer ?? this.Customer);
   }
   
-  ServerBio.fromJson(Map<String, dynamic> json)  
+  Link.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
-      _bio = json['bio'],
-      _profile_picture = json['profile_picture'],
-      _Server = json['Server']?['serializedData'] != null
-        ? User.fromJson(new Map<String, dynamic>.from(json['Server']['serializedData']))
+      _serverID = json['serverID'],
+      _Customer = json['Customer']?['serializedData'] != null
+        ? User.fromJson(new Map<String, dynamic>.from(json['Customer']['serializedData']))
         : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'bio': _bio, 'profile_picture': _profile_picture, 'Server': _Server?.toJson()
+    'id': id, 'serverID': _serverID, 'Customer': _Customer?.toJson()
   };
 
-  static final QueryField ID = QueryField(fieldName: "serverBio.id");
-  static final QueryField BIO = QueryField(fieldName: "bio");
-  static final QueryField PROFILE_PICTURE = QueryField(fieldName: "profile_picture");
-  static final QueryField SERVER = QueryField(
-    fieldName: "Server",
+  static final QueryField ID = QueryField(fieldName: "link.id");
+  static final QueryField SERVERID = QueryField(fieldName: "serverID");
+  static final QueryField CUSTOMER = QueryField(
+    fieldName: "Customer",
     fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (User).toString()));
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
-    modelSchemaDefinition.name = "ServerBio";
-    modelSchemaDefinition.pluralName = "ServerBios";
+    modelSchemaDefinition.name = "Link";
+    modelSchemaDefinition.pluralName = "Links";
     
     modelSchemaDefinition.authRules = [
       AuthRule(
@@ -138,31 +131,25 @@ class ServerBio extends Model {
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: ServerBio.BIO,
-      isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
-    
-    modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: ServerBio.PROFILE_PICTURE,
-      isRequired: false,
+      key: Link.SERVERID,
+      isRequired: true,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
-      key: ServerBio.SERVER,
+      key: Link.CUSTOMER,
       isRequired: true,
-      targetName: "serverBioServerId",
+      targetName: "linkCustomerId",
       ofModelName: (User).toString()
     ));
   });
 }
 
-class _ServerBioModelType extends ModelType<ServerBio> {
-  const _ServerBioModelType();
+class _LinkModelType extends ModelType<Link> {
+  const _LinkModelType();
   
   @override
-  ServerBio fromJson(Map<String, dynamic> jsonData) {
-    return ServerBio.fromJson(jsonData);
+  Link fromJson(Map<String, dynamic> jsonData) {
+    return Link.fromJson(jsonData);
   }
 }

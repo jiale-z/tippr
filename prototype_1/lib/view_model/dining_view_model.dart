@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:prototype_1/models/User.dart';
 
-class MediaViewModel with ChangeNotifier {
+class DiningViewModel with ChangeNotifier {
   User user = 
 
   Media? _media;

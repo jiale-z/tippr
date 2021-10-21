@@ -29,7 +29,7 @@ class User extends Model {
   final String? _serverCode;
   final String? _name;
   final List<DiningPreference>? _DiningPreferences;
-  final ServerBio? _ServerBio;
+  final List<Link>? _CustomerLinks;
 
   @override
   getInstanceType() => classType;
@@ -43,27 +43,31 @@ class User extends Model {
     return _serverCode;
   }
   
-  String? get name {
-    return _name;
+  String get name {
+    try {
+      return _name!;
+    } catch(e) {
+      throw new DataStoreException(DataStoreExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage, recoverySuggestion: DataStoreExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion, underlyingException: e.toString());
+    }
   }
   
   List<DiningPreference>? get DiningPreferences {
     return _DiningPreferences;
   }
   
-  ServerBio? get ServerBio {
-    return _ServerBio;
+  List<Link>? get CustomerLinks {
+    return _CustomerLinks;
   }
   
-  const User._internal({required this.id, serverCode, name, DiningPreferences, ServerBio}): _serverCode = serverCode, _name = name, _DiningPreferences = DiningPreferences, _ServerBio = ServerBio;
+  const User._internal({required this.id, serverCode, required name, DiningPreferences, CustomerLinks}): _serverCode = serverCode, _name = name, _DiningPreferences = DiningPreferences, _CustomerLinks = CustomerLinks;
   
-  factory User({String? id, String? serverCode, String? name, List<DiningPreference>? DiningPreferences, ServerBio? ServerBio}) {
+  factory User({String? id, String? serverCode, required String name, List<DiningPreference>? DiningPreferences, List<Link>? CustomerLinks}) {
     return User._internal(
       id: id == null ? UUID.getUUID() : id,
       serverCode: serverCode,
       name: name,
       DiningPreferences: DiningPreferences != null ? List<DiningPreference>.unmodifiable(DiningPreferences) : DiningPreferences,
-      ServerBio: ServerBio);
+      CustomerLinks: CustomerLinks != null ? List<Link>.unmodifiable(CustomerLinks) : CustomerLinks);
   }
   
   bool equals(Object other) {
@@ -78,7 +82,7 @@ class User extends Model {
       _serverCode == other._serverCode &&
       _name == other._name &&
       DeepCollectionEquality().equals(_DiningPreferences, other._DiningPreferences) &&
-      _ServerBio == other._ServerBio;
+      DeepCollectionEquality().equals(_CustomerLinks, other._CustomerLinks);
   }
   
   @override
@@ -91,20 +95,19 @@ class User extends Model {
     buffer.write("User {");
     buffer.write("id=" + "$id" + ", ");
     buffer.write("serverCode=" + "$_serverCode" + ", ");
-    buffer.write("name=" + "$_name" + ", ");
-    buffer.write("ServerBio=" + (_ServerBio != null ? _ServerBio!.toString() : "null"));
+    buffer.write("name=" + "$_name");
     buffer.write("}");
     
     return buffer.toString();
   }
   
-  User copyWith({String? id, String? serverCode, String? name, List<DiningPreference>? DiningPreferences, ServerBio? ServerBio}) {
+  User copyWith({String? id, String? serverCode, String? name, List<DiningPreference>? DiningPreferences, List<Link>? CustomerLinks}) {
     return User(
       id: id ?? this.id,
       serverCode: serverCode ?? this.serverCode,
       name: name ?? this.name,
       DiningPreferences: DiningPreferences ?? this.DiningPreferences,
-      ServerBio: ServerBio ?? this.ServerBio);
+      CustomerLinks: CustomerLinks ?? this.CustomerLinks);
   }
   
   User.fromJson(Map<String, dynamic> json)  
@@ -117,12 +120,15 @@ class User extends Model {
           .map((e) => DiningPreference.fromJson(new Map<String, dynamic>.from(e['serializedData'])))
           .toList()
         : null,
-      _ServerBio = json['ServerBio']?['serializedData'] != null
-        ? ServerBio.fromJson(new Map<String, dynamic>.from(json['ServerBio']['serializedData']))
+      _CustomerLinks = json['CustomerLinks'] is List
+        ? (json['CustomerLinks'] as List)
+          .where((e) => e?['serializedData'] != null)
+          .map((e) => Link.fromJson(new Map<String, dynamic>.from(e['serializedData'])))
+          .toList()
         : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'serverCode': _serverCode, 'name': _name, 'DiningPreferences': _DiningPreferences?.map((DiningPreference? e) => e?.toJson()).toList(), 'ServerBio': _ServerBio?.toJson()
+    'id': id, 'serverCode': _serverCode, 'name': _name, 'DiningPreferences': _DiningPreferences?.map((e) => e?.toJson())?.toList(), 'CustomerLinks': _CustomerLinks?.map((e) => e?.toJson())?.toList()
   };
 
   static final QueryField ID = QueryField(fieldName: "user.id");
@@ -131,9 +137,9 @@ class User extends Model {
   static final QueryField DININGPREFERENCES = QueryField(
     fieldName: "DiningPreferences",
     fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (DiningPreference).toString()));
-  static final QueryField SERVERBIO = QueryField(
-    fieldName: "ServerBio",
-    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (ServerBio).toString()));
+  static final QueryField CUSTOMERLINKS = QueryField(
+    fieldName: "CustomerLinks",
+    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (Link).toString()));
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "User";
     modelSchemaDefinition.pluralName = "Users";
@@ -159,7 +165,7 @@ class User extends Model {
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: User.NAME,
-      isRequired: false,
+      isRequired: true,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
     
@@ -170,11 +176,11 @@ class User extends Model {
       associatedKey: DiningPreference.USERID
     ));
     
-    modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
-      key: User.SERVERBIO,
+    modelSchemaDefinition.addField(ModelFieldDefinition.hasMany(
+      key: User.CUSTOMERLINKS,
       isRequired: false,
-      targetName: "userServerBioId",
-      ofModelName: (ServerBio).toString()
+      ofModelName: (Link).toString(),
+      associatedKey: Link.SERVERID
     ));
   });
 }
