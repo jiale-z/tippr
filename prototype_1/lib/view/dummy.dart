@@ -13,6 +13,10 @@ class _DummyScreenState extends State<Dummy> {
   @override
   void initState() {
     super.initState();
+    //Fetching user data in viewmodel on the initialization of the first screen
+    // listen: false signifies that this reference doesn't need to listen for event
+    // changes to the viewmodel because it's a synchronous one time method call, rather
+    // than a data read
     Provider.of<HomeViewModel>(context, listen: false).fetchUserData();
   }
 
@@ -24,6 +28,7 @@ class _DummyScreenState extends State<Dummy> {
       ),
       body: Column(
         children: <Widget>[
+          //Reading the value of the user directly from the viewmodel using Provider
           Text(Provider.of<HomeViewModel>(context).user.toString()),
           ElevatedButton(
               onPressed: () {
@@ -36,6 +41,8 @@ class _DummyScreenState extends State<Dummy> {
                     .createServerLink('123abc');
               },
               child: Text('new LINKSDNFKSDFN')),
+          //Using ternary operators to change the content of the screen based on the data
+          // available. In this case,
           (Provider.of<HomeViewModel>(context).serverBio != null)
               ? Text(Provider.of<HomeViewModel>(context).serverBio!.bio!)
               : Text('no server')
