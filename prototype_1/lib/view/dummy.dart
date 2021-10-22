@@ -10,7 +10,6 @@ class Dummy extends StatefulWidget {
 }
 
 class _DummyScreenState extends State<Dummy> {
-
   @override
   void initState() {
     super.initState();
@@ -19,14 +18,27 @@ class _DummyScreenState extends State<Dummy> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dummy'),
+        title: const Text('Dummy'),
       ),
       body: Column(
         children: <Widget>[
-          Text(Provider.of<HomeViewModel>(context).userList.toString()),
+          Text(Provider.of<HomeViewModel>(context).user.toString()),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/2');
+              },
+              child: const Text('Dining Preferences')),
+          ElevatedButton(
+              onPressed: () {
+                Provider.of<HomeViewModel>(context, listen: false)
+                    .createServerLink('123abc');
+              },
+              child: Text('new LINKSDNFKSDFN')),
+          (Provider.of<HomeViewModel>(context).serverBio != null)
+              ? Text(Provider.of<HomeViewModel>(context).serverBio!.bio!)
+              : Text('no server')
         ],
       ),
     );

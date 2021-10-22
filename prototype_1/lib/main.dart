@@ -10,7 +10,9 @@ import 'models/ModelProvider.dart';
 import 'package:provider/provider.dart';
 
 import 'view_model/home_view_model.dart';
+import 'view_model/preference_view_model.dart';
 import 'view/dummy.dart';
+import 'view/dummy_2.dart';
 
 import 'package:prototype_1/models/User.dart';
 import "dart:async";
@@ -26,9 +28,7 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-
 class _MyAppState extends State<MyApp> {
-
   bool _loading = true;
   late StreamSubscription _subscription;
 
@@ -54,9 +54,7 @@ class _MyAppState extends State<MyApp> {
     //_configureAmplify();
     //var list = await Amplify.DataStore.query(User.classType);
     //print(list.toString());
-    User newUser = User(
-      name: "TestUser"
-    );
+    User newUser = User(name: "TestUser");
     print("ABC");
     await Amplify.DataStore.save(newUser);
     print("ABD");
@@ -66,18 +64,19 @@ class _MyAppState extends State<MyApp> {
     } catch (e) {
       print("HEY" + e.toString());
     }
-}
+  }
 
   Future<void> _configureAmplify() async {
     // Add the following lines to your app initialization to add the DataStore plugin
     AmplifyDataStore datastorePlugin =
-      AmplifyDataStore(modelProvider: ModelProvider.instance);
+        AmplifyDataStore(modelProvider: ModelProvider.instance);
     Amplify.addPlugin(datastorePlugin);
     Amplify.addPlugin(AmplifyAPI());
     try {
       await Amplify.configure(amplifyconfig);
     } on AmplifyAlreadyConfiguredException {
-      print("Tried to reconfigure Amplify; this can occur when your app restarts on Android.");
+      print(
+          "Tried to reconfigure Amplify; this can occur when your app restarts on Android.");
     }
     setState(() {
       _loading = false;
@@ -88,24 +87,28 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-
-    return _loading ? Text("Loading") : MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => HomeViewModel(),
-        )
-      ],
-      child: MaterialApp(
-          title: 'Tippr',
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-          ),
-          initialRoute: '/',
-          routes: {
-            '/' : (context) => Dummy(),
-          }
-      ),
-    );
+    return _loading
+        ? /*Text("Loading")*/ Scaffold()
+        : MultiProvider(
+            providers: [
+              ChangeNotifierProvider(
+                create: (_) => HomeViewModel(),
+              ),
+              ChangeNotifierProvider(
+                create: (_) => PreferenceViewModel(),
+              )
+            ],
+            child: MaterialApp(
+                title: 'Tippr',
+                theme: ThemeData(
+                  primarySwatch: Colors.blue,
+                ),
+                initialRoute: '/',
+                routes: {
+                  '/': (context) => Dummy(),
+                  '/2': (context) => Dummy2(),
+                }),
+          );
   }
 
   /*
