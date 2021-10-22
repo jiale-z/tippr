@@ -1,4 +1,5 @@
 //Default Imports
+import 'package:amplify_api/amplify_api.dart';
 import 'package:flutter/material.dart';
 //Amplify Imports from pubspec.yaml
 import 'package:amplify_flutter/amplify.dart';
@@ -9,7 +10,10 @@ import 'models/ModelProvider.dart';
 import 'package:provider/provider.dart';
 
 import 'view_model/home_view_model.dart';
-import 'view/Dummy.dart';
+import 'view/dummy.dart';
+
+import 'package:prototype_1/models/User.dart';
+import "dart:async";
 
 void main() {
   runApp(const MyApp());
@@ -24,27 +28,68 @@ class MyApp extends StatefulWidget {
 
 
 class _MyAppState extends State<MyApp> {
+
+  bool _loading = true;
+  late StreamSubscription _subscription;
+
   @override
   void initState() {
+    //super.initState();
+    _initializeApp();
     super.initState();
-    _configureAmplify();
+    /*
+    while (_loading) {
+      print("porblem");
+    }
+
+     */
+    //_testAmplify();
   }
 
-  void _configureAmplify() async {
+  Future<void> _initializeApp() async {
+    await _configureAmplify();
+  }
+
+  void _testAmplify() async {
+    //_configureAmplify();
+    //var list = await Amplify.DataStore.query(User.classType);
+    //print(list.toString());
+    User newUser = User(
+      name: "TestUser"
+    );
+    print("ABC");
+    await Amplify.DataStore.save(newUser);
+    print("ABD");
+    try {
+      List<User> users = await Amplify.DataStore.query(User.classType);
+      print("HEEYYYYYY" + users.toString());
+    } catch (e) {
+      print("HEY" + e.toString());
+    }
+}
+
+  Future<void> _configureAmplify() async {
     // Add the following lines to your app initialization to add the DataStore plugin
     AmplifyDataStore datastorePlugin =
-    AmplifyDataStore(modelProvider: ModelProvider.instance);
+      AmplifyDataStore(modelProvider: ModelProvider.instance);
     Amplify.addPlugin(datastorePlugin);
+    Amplify.addPlugin(AmplifyAPI());
     try {
       await Amplify.configure(amplifyconfig);
     } on AmplifyAlreadyConfiguredException {
       print("Tried to reconfigure Amplify; this can occur when your app restarts on Android.");
     }
+    setState(() {
+      _loading = false;
+    });
+    //_loading = false;
+    //_testAmplify();
   }
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+
+    return _loading ? Text("Loading") : MultiProvider(
       providers: [
         ChangeNotifierProvider(
           create: (_) => HomeViewModel(),

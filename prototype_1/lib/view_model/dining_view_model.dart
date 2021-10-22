@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:prototype_1/models/User.dart';
 
 class DiningViewModel with ChangeNotifier {
-  User user = 
+  /*
+  User user =
 
   Media? _media;
 
@@ -33,4 +34,6 @@ class DiningViewModel with ChangeNotifier {
     _media = media;
     notifyListeners();
   }
+
+   */
 }
