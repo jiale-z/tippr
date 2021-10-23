@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:frontend_temp/main.dart';
-import 'package:frontend_temp/view/homePage.dart';
-import 'package:frontend_temp/view/prefPage.dart';
-import 'package:frontend_temp/view/linkPage.dart';
-import 'package:frontend_temp/view/preferences_page.dart';
-import 'package:frontend_temp/view/bioPage.dart';
+import 'package:prototype_1/main.dart';
+import 'package:prototype_1/view/homePage.dart';
+import 'package:prototype_1/view/linkPage.dart';
+import 'package:prototype_1/view/preferences_page.dart';
+import 'package:prototype_1/view/bioPage.dart';
 
 class RouteGenerator {
   static Route<dynamic> generateRoute(RouteSettings settings) {
