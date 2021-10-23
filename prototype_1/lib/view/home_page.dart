@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> {
       body: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: <Widget>[Column(
+      children: <Widget>[ Expanded( child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
@@ -94,10 +94,10 @@ class _HomePageState extends State<HomePage> {
           //Using ternary operators to change the content of the screen based on the data
           // available. In this case,
           (Provider.of<HomeViewModel>(context).serverBio != null)
-              ? Text(Provider.of<HomeViewModel>(context).server!.name + ": " + Provider.of<HomeViewModel>(context).serverBio!.bio!)
+              ? Text(Provider.of<HomeViewModel>(context).server!.name + ": " + Provider.of<HomeViewModel>(context).serverBio!.bio!, maxLines: 5,)
               : Text('Click Link to Connect to your Server!')
         ],
-      ),
+      )),
     ]),
     );
   }
