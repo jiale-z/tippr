@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:prototype_1/main.dart';
-import 'package:prototype_1/view/homePage.dart';
+import 'package:prototype_1/view/home_page.dart';
 import 'package:prototype_1/view/linkPage.dart';
 import 'package:prototype_1/view/preferences_page.dart';
 import 'package:prototype_1/view/bioPage.dart';

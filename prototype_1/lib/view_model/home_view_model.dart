@@ -91,6 +91,8 @@ class HomeViewModel with ChangeNotifier {
       }
     });
 
+    _server_bio = null;
+
     notifyListeners();
   }
 }

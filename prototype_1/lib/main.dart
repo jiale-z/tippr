@@ -4,9 +4,10 @@ import 'package:flutter/material.dart';
 //Amplify Imports from pubspec.yaml
 import 'package:amplify_flutter/amplify.dart';
 import 'package:amplify_datastore/amplify_datastore.dart';
+import 'package:prototype_1/view/preferences_page.dart';
 import 'amplifyconfiguration.dart';
 import 'models/ModelProvider.dart';
-import 'view/homePage.dart';
+import 'view/home_page.dart';
 import 'package:prototype_1/route_generator.dart';
 
 import 'package:provider/provider.dart';
@@ -15,6 +16,7 @@ import 'view_model/home_view_model.dart';
 import 'view_model/preference_view_model.dart';
 import 'view/dummy.dart';
 import 'view/dummy_2.dart';
+import 'view/home_page.dart';
 
 import 'package:prototype_1/models/User.dart';
 import "dart:async";
@@ -65,45 +67,46 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
-  // @override
-  // Widget build(BuildContext context) {
-  //   //Using loading bool to either return a dummy app (not sure if this works correctly)
-  //   // or begin the actual app initialization when ready
-  //   return _loading
-  //       ? const MaterialApp(title: 'Loading')
-
-  //       //These providers are what allow the ViewModels to be used and accessed from
-  //       // any view within the app, and also what handles the event propogation to update
-  //       // these views when the viewmodel changes
-  //       : MultiProvider(
-  //           providers: [
-  //             ChangeNotifierProvider(
-  //               create: (_) => HomeViewModel(),
-  //             ),
-  //             ChangeNotifierProvider(
-  //               create: (_) => PreferenceViewModel(),
-  //             )
-  //           ],
-  //           child: MaterialApp(
-  //               title: 'Tippr',
-  //               theme: ThemeData(
-  //                 primarySwatch: Colors.blue,
-  //               ),
-  //               initialRoute: '/',
-  //               routes: {
-  //                 '/': (context) => Dummy(),
-  //                 '/2': (context) => Dummy2(),
-  //               }),
-  //         );
-  // }
-
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'TIPPR Frontend Demo',
-      theme: ThemeData(primarySwatch: Colors.blue),
-      initialRoute: '/home',
-      onGenerateRoute: RouteGenerator.generateRoute,
-    );
+    //Using loading bool to either return a dummy app (not sure if this works correctly)
+    // or begin the actual app initialization when ready
+    return _loading
+        ? const MaterialApp(title: 'Loading')
+
+        //These providers are what allow the ViewModels to be used and accessed from
+        // any view within the app, and also what handles the event propogation to update
+        // these views when the viewmodel changes
+        : MultiProvider(
+            providers: [
+              ChangeNotifierProvider(
+                create: (_) => HomeViewModel(),
+              ),
+              ChangeNotifierProvider(
+                create: (_) => PreferenceViewModel(),
+              )
+            ],
+            child: MaterialApp(
+                title: 'Tippr',
+                theme: ThemeData(
+                  primarySwatch: Colors.blue,
+                ),
+                initialRoute: '/',
+                routes: {
+                  '/': (context) => HomePage(),
+                  '/2': (context) => Dummy2(),
+                  '/3': (context) => PreferencePage(),
+                }),
+          );
   }
+
+  // @override
+  // Widget build(BuildContext context) {
+  //   return MaterialApp(
+  //     title: 'TIPPR Frontend Demo',
+  //     theme: ThemeData(primarySwatch: Colors.blue),
+  //     initialRoute: '/home',
+  //     onGenerateRoute: RouteGenerator.generateRoute,
+  //   );
+  // }
 }

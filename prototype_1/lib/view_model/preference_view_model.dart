@@ -38,12 +38,28 @@ class PreferenceViewModel with ChangeNotifier {
 
   //This function will be called whenever the User creates a new Dining Preference
   Future<void> addDiningPreference(String val) async {
-    DiningPreference newPref = DiningPreference(userID: _user!.id, value: val);
-    try {
-      await Amplify.DataStore.save(newPref);
-    } catch (e) {
-      print(e);
+    if (_preferences!.isEmpty) {
+      // need to add new pref
+      DiningPreference newPref = DiningPreference(
+          userID: _user!.id, value: val);
+      try {
+        await Amplify.DataStore.save(newPref);
+      } catch (e) {
+        print(e);
+      }
+    } else {
+      // modify current pref
+      DiningPreference newPref = DiningPreference(
+          id: _preferences![0].id, userID: _user!.id, value: val);
+      try {
+        await Amplify.DataStore.save(newPref);
+      } catch (e) {
+        print(e);
+      }
     }
+
+    await fetchDiningPreferences();
+
     notifyListeners();
   }
 

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
+
+import 'package:prototype_1/view_model/preference_view_model.dart';
+import 'package:provider/provider.dart';
+//import 'package:flutter_awesome_buttons/flutter_awesome_buttons.dart';
 
 class PreferencePage extends StatefulWidget {
-  const PreferencePage({Key? key}) : super(key: key);
+  //const PreferencePage({Key? key}) : super(key: key);
 
   @override
   _PreferencePageState createState() => _PreferencePageState();
@@ -20,6 +23,7 @@ class _PreferencePageState extends State<PreferencePage> {
   void initState() {
     super.initState();
     _editingController = TextEditingController(text: initialText);
+    Provider.of<PreferenceViewModel>(context, listen: false).fetchDiningPreferences();
   }
 
   @override
@@ -80,11 +84,12 @@ class _PreferencePageState extends State<PreferencePage> {
       currentFocus.unfocus();
     }
 
-    //call viewmodel here
+    Provider.of<PreferenceViewModel>(context, listen: false).addDiningPreference(_editingController.text);
+
   }
 
   Widget getTextWidgets(List<String> strings) {
-    return new Row(children: strings.map((item) => new Text(item)).toList());
+    return Row(children: strings.map((item) => Text(item)).toList());
   }
 
   void _userSettings() {
@@ -96,12 +101,15 @@ class _PreferencePageState extends State<PreferencePage> {
   }
 
   Widget buildAppEntryRow(BuildContext context) {
-    String InitialText = "Initial Text Test";
-    return new Row(
+    String InitialText = "No Preferences yet!";
+    _editingController = TextEditingController(text: (Provider.of<PreferenceViewModel>(context).preferences!.isEmpty)
+        ? InitialText
+        : Provider.of<PreferenceViewModel>(context, listen: false).preferences![0].value);
+    return Row(
       children: <Widget>[
-        new Flexible(
-          child: new TextField(
-            controller: TextEditingController(text: InitialText),
+        Flexible(
+          child: TextField(
+            controller: _editingController,
             maxLines: null,
             // decoration: const InputDecoration(helperText: "Waiting Style"),
             style: TextStyle(color: Colors.black),
