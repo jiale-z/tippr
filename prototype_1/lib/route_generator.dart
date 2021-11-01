@@ -1,3 +1,7 @@
+/*
+  No longer using route_generator for routes. See routes in main.dart
+*/
+
 import 'package:flutter/material.dart';
 import 'package:prototype_1/main.dart';
 import 'package:prototype_1/view/home_page.dart';
