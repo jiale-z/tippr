@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class HomePage extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _LoginPageState createState() => _LoginPageState();
 
   // const AuthPage({
   //   Key? key,
@@ -10,7 +10,7 @@ class HomePage extends StatefulWidget {
   // }) : super(key: key);
 }
 
-class _HomePageState extends State<HomePage> {
+class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
@@ -21,14 +21,14 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home Page!'),
+        title: Text('Login Page!'),
       ),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
-              'p4 home page',
+              'p4 login page',
               style: TextStyle(fontSize: 50),
             ),
           ],
