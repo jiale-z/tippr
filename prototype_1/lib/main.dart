@@ -11,7 +11,7 @@ import 'package:prototype_1/view/registration_page.dart';
 import 'package:prototype_1/view/home_page.dart';
 import 'package:prototype_1/view/customer_page.dart';
 import 'package:prototype_1/view/server_page.dart';
-import 'package:prototype_1/view/dining_page.dart';
+import 'package:prototype_1/view/dining_mode_page.dart';
 //import 'package:prototype_1/view/preferences_page.dart';
 
 import 'package:prototype_1/amplifyconfiguration.dart';
