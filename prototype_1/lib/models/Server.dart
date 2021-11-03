@@ -19,16 +19,19 @@
 
 // ignore_for_file: public_member_api_docs, file_names, unnecessary_new, prefer_if_null_operators, prefer_const_constructors, slash_for_doc_comments, annotate_overrides, non_constant_identifier_names, unnecessary_string_interpolations, prefer_adjacent_string_concatenation, unnecessary_const, dead_code
 
+import 'ModelProvider.dart';
 import 'package:amplify_datastore_plugin_interface/amplify_datastore_plugin_interface.dart';
 import 'package:flutter/foundation.dart';
 
 
-/** This is an auto generated class representing the User type in your schema. */
+/** This is an auto generated class representing the Server type in your schema. */
 @immutable
-class User extends Model {
-  static const classType = const _UserModelType();
+class Server extends Model {
+  static const classType = const _ServerModelType();
   final String id;
-  final String? _name;
+  final User? _user;
+  final String? _restaurantID;
+  final ServerBio? _bio;
 
   @override
   getInstanceType() => classType;
@@ -38,20 +41,30 @@ class User extends Model {
     return id;
   }
   
-  String get name {
+  User get user {
     try {
-      return _name!;
+      return _user!;
     } catch(e) {
       throw new DataStoreException(DataStoreExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage, recoverySuggestion: DataStoreExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion, underlyingException: e.toString());
     }
   }
   
-  const User._internal({required this.id, required name}): _name = name;
+  String? get restaurantID {
+    return _restaurantID;
+  }
   
-  factory User({String? id, required String name}) {
-    return User._internal(
+  ServerBio? get bio {
+    return _bio;
+  }
+  
+  const Server._internal({required this.id, required user, restaurantID, bio}): _user = user, _restaurantID = restaurantID, _bio = bio;
+  
+  factory Server({String? id, required User user, String? restaurantID, ServerBio? bio}) {
+    return Server._internal(
       id: id == null ? UUID.getUUID() : id,
-      name: name);
+      user: user,
+      restaurantID: restaurantID,
+      bio: bio);
   }
   
   bool equals(Object other) {
@@ -61,9 +74,11 @@ class User extends Model {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is User &&
+    return other is Server &&
       id == other.id &&
-      _name == other._name;
+      _user == other._user &&
+      _restaurantID == other._restaurantID &&
+      _bio == other._bio;
   }
   
   @override
@@ -73,33 +88,45 @@ class User extends Model {
   String toString() {
     var buffer = new StringBuffer();
     
-    buffer.write("User {");
+    buffer.write("Server {");
     buffer.write("id=" + "$id" + ", ");
-    buffer.write("name=" + "$_name");
+    buffer.write("user=" + (_user != null ? _user!.toString() : "null") + ", ");
+    buffer.write("restaurantID=" + "$_restaurantID" + ", ");
+    buffer.write("bio=" + (_bio != null ? _bio!.toString() : "null"));
     buffer.write("}");
     
     return buffer.toString();
   }
   
-  User copyWith({String? id, String? name}) {
-    return User(
+  Server copyWith({String? id, User? user, String? restaurantID, ServerBio? bio}) {
+    return Server(
       id: id ?? this.id,
-      name: name ?? this.name);
+      user: user ?? this.user,
+      restaurantID: restaurantID ?? this.restaurantID,
+      bio: bio ?? this.bio);
   }
   
-  User.fromJson(Map<String, dynamic> json)  
+  Server.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
-      _name = json['name'];
+      _user = json['user']?['serializedData'] != null
+        ? User.fromJson(new Map<String, dynamic>.from(json['user']['serializedData']))
+        : null,
+      _restaurantID = json['restaurantID'],
+      _bio = json['bio'];
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'name': _name
+    'id': id, 'user': _user?.toJson(), 'restaurantID': _restaurantID, 'bio': _bio
   };
 
-  static final QueryField ID = QueryField(fieldName: "user.id");
-  static final QueryField NAME = QueryField(fieldName: "name");
+  static final QueryField ID = QueryField(fieldName: "server.id");
+  static final QueryField USER = QueryField(
+    fieldName: "user",
+    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (User).toString()));
+  static final QueryField RESTAURANTID = QueryField(fieldName: "restaurantID");
+  static final QueryField BIO = QueryField(fieldName: "bio");
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
-    modelSchemaDefinition.name = "User";
-    modelSchemaDefinition.pluralName = "Users";
+    modelSchemaDefinition.name = "Server";
+    modelSchemaDefinition.pluralName = "Servers";
     
     modelSchemaDefinition.authRules = [
       AuthRule(
@@ -114,19 +141,32 @@ class User extends Model {
     
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
     
-    modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: User.NAME,
+    modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
+      key: Server.USER,
       isRequired: true,
+      targetName: "serverUserId",
+      ofModelName: (User).toString()
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
+      key: Server.RESTAURANTID,
+      isRequired: false,
+      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
+      key: Server.BIO,
+      isRequired: false,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
   });
 }
 
-class _UserModelType extends ModelType<User> {
-  const _UserModelType();
+class _ServerModelType extends ModelType<Server> {
+  const _ServerModelType();
   
   @override
-  User fromJson(Map<String, dynamic> jsonData) {
-    return User.fromJson(jsonData);
+  Server fromJson(Map<String, dynamic> jsonData) {
+    return Server.fromJson(jsonData);
   }
 }

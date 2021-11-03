@@ -20,37 +20,37 @@
 // ignore_for_file: public_member_api_docs, file_names, unnecessary_new, prefer_if_null_operators, prefer_const_constructors, slash_for_doc_comments, annotate_overrides, non_constant_identifier_names, unnecessary_string_interpolations, prefer_adjacent_string_concatenation, unnecessary_const, dead_code
 
 import 'package:amplify_datastore_plugin_interface/amplify_datastore_plugin_interface.dart';
-import 'DiningPreference.dart';
-import 'Link.dart';
-import 'ServerBio.dart';
+import 'Customer.dart';
+import 'Restaurant.dart';
+import 'Server.dart';
 import 'User.dart';
 
-export 'DiningPreference.dart';
-export 'Link.dart';
-export 'ServerBio.dart';
+export 'Customer.dart';
+export 'Restaurant.dart';
+export 'Server.dart';
 export 'User.dart';
 
 class ModelProvider implements ModelProviderInterface {
   @override
-  String version = "c351e5267bba88bc1b2a8945455e4ed7";
+  String version = "e387ec96ace352897c6887ae0bff809c";
   @override
-  List<ModelSchema> modelSchemas = [DiningPreference.schema, Link.schema, ServerBio.schema, User.schema];
+  List<ModelSchema> modelSchemas = [Customer.schema, Restaurant.schema, Server.schema, User.schema];
   static final ModelProvider _instance = ModelProvider();
 
   static ModelProvider get instance => _instance;
   
   ModelType getModelTypeByModelName(String modelName) {
     switch(modelName) {
-    case "DiningPreference": {
-    return DiningPreference.classType;
+    case "Customer": {
+    return Customer.classType;
     }
     break;
-    case "Link": {
-    return Link.classType;
+    case "Restaurant": {
+    return Restaurant.classType;
     }
     break;
-    case "ServerBio": {
-    return ServerBio.classType;
+    case "Server": {
+    return Server.classType;
     }
     break;
     case "User": {
