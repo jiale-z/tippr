@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import './home_page.dart';
 import './login_page.dart';
 import './registration_page.dart';
+import './guest_page.dart';
 
 class AuthPage extends StatefulWidget {
   @override
@@ -25,6 +26,7 @@ class _AuthPageState extends State<AuthPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('TIPPR'),
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -147,6 +149,6 @@ class _AuthPageState extends State<AuthPage> {
   guest() {
     //call viewmodel here
 
-    Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage()));
+    Navigator.push(context, MaterialPageRoute(builder: (_) => GuestPage()));
   }
 }

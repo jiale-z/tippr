@@ -91,7 +91,7 @@ class _LoginDemoState extends State<LoginDemo> {
             ),
             Container(
               height: MediaQuery.of(context).size.height * 0.10,
-              width: MediaQuery.of(context).size.width * .1,
+              width: MediaQuery.of(context).size.width * 1,
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: TextButton(

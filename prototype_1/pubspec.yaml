@@ -36,6 +36,7 @@ dependencies:
   amplify_datastore: ^0.2.0
   amplify_api: ^0.2.0
   multi_select_flutter: ^4.0.0
+  image_picker: ^0.8.2
 
   # Added awesome buttons package
   flutter_awesome_buttons: ^1.1.0
