@@ -55,7 +55,7 @@ class _RegistrationDemoState extends State<RegistrationDemo> {
               padding: const EdgeInsets.only(top: 60.0),
               child: Center(
                 child: Container(
-                  width: MediaQuery.of(context).size.height * 0.70,
+                  width: MediaQuery.of(context).size.width * 1,
                   height: MediaQuery.of(context).size.height * 0.20,
                   child: Text(
                     'Register for TIPPR',
@@ -89,7 +89,7 @@ class _RegistrationDemoState extends State<RegistrationDemo> {
             ),
             Container(
               height: MediaQuery.of(context).size.height * 0.10,
-              width: MediaQuery.of(context).size.height * .85,
+              width: MediaQuery.of(context).size.width * 1,
               child: MultiSelectDialogField(
                 title: Text("Select User Roles"),
                 items: _userroles
@@ -103,7 +103,7 @@ class _RegistrationDemoState extends State<RegistrationDemo> {
             ),
             Container(
               height: MediaQuery.of(context).size.height * 0.10,
-              width: MediaQuery.of(context).size.height * .85,
+              width: MediaQuery.of(context).size.width * 1,
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
