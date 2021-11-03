@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-class UserPathPage extends StatefulWidget {
+class DiningPage extends StatefulWidget {
   @override
-  _UserPathPageState createState() => _UserPathPageState();
+  _DiningPageState createState() => _DiningPageState();
 
   // const AuthPage({
   //   Key? key,
@@ -10,7 +10,7 @@ class UserPathPage extends StatefulWidget {
   // }) : super(key: key);
 }
 
-class _UserPathPageState extends State<UserPathPage> {
+class _DiningPageState extends State<DiningPage> {
   @override
   void initState() {
     super.initState();
@@ -21,14 +21,14 @@ class _UserPathPageState extends State<UserPathPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('User Path Page!'),
+        title: Text('Time to Dine!'),
       ),
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             Text(
-              'p4 user path page',
+              'p4 dining page',
               style: TextStyle(fontSize: 50),
             ),
           ],

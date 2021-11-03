@@ -4,11 +4,19 @@ import 'package:flutter/material.dart';
 //Amplify Imports from pubspec.yaml
 import 'package:amplify_flutter/amplify.dart';
 import 'package:amplify_datastore/amplify_datastore.dart';
-import 'package:prototype_1/view/preferences_page.dart';
-import 'amplifyconfiguration.dart';
-import 'models/ModelProvider.dart';
-import 'view/home_page.dart';
-import 'package:prototype_1/route_generator.dart';
+
+import 'package:prototype_1/view/auth_page.dart';
+import 'package:prototype_1/view/login_page.dart';
+import 'package:prototype_1/view/registration_page.dart';
+import 'package:prototype_1/view/home_page.dart';
+import 'package:prototype_1/view/customer_page.dart';
+import 'package:prototype_1/view/server_page.dart';
+import 'package:prototype_1/view/dining_page.dart';
+//import 'package:prototype_1/view/preferences_page.dart';
+
+import 'package:prototype_1/amplifyconfiguration.dart';
+import 'package:prototype_1/models/ModelProvider.dart';
+//import 'package:prototype_1/route_generator.dart';
 
 import 'package:provider/provider.dart';
 
@@ -93,9 +101,21 @@ class _MyAppState extends State<MyApp> {
                 ),
                 initialRoute: '/',
                 routes: {
+                  /*  default page is homepage for testing purposes
+                      eventually it will be authentication page */
+
                   '/': (context) => HomePage(),
                   '/2': (context) => Dummy2(),
-                  '/3': (context) => PreferencePage(),
+                  //'/3': (context) => PreferencePage(),
+
+                  // url quality route names.
+                  //'/': (context) => AuthPage(),
+                  '/login': (context) => LoginPage(),
+                  '/register': (context) => RegistrationPage(),
+                  '/home': (context) => HomePage(),
+                  '/dine': (context) => DiningPage(),
+                  '/customer': (context) => CustomerPage(),
+                  '/server': (context) => ServerPage(),
                 }),
           );
   }
