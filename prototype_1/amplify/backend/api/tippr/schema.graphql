@@ -1,27 +1,45 @@
-type Link @model @auth(rules: [{allow: public}]) @key(name: "byUser", fields: ["serverID"]) {
-  id: ID!
-  serverID: ID!
-  Customer: User! @connection
+type ServerBio {
+  bio: String
+  picture: AWSURL
 }
 
-type ServerBio @model @auth(rules: [{allow: public}]) {
+type Restaurant @model @auth(rules: [{allow: public}]) {
   id: ID!
-  bio: String
-  profile_picture: AWSURL
-  Server: User! @connection
+  menu: AWSURL
+  user: User! @connection
+  servers: [Server] @connection(keyName: "byRestaurant", fields: ["id"])
+  title: String
+}
+
+type Server @model @auth(rules: [{allow: public}]) @key(name: "byRestaurant", fields: ["restaurantID"]) {
+  id: ID!
+  user: User! @connection
+  restaurantID: ID
+  bio: ServerBio
+}
+
+type Allergens {
+  milk: Boolean
+  eggs: Boolean
+  fish: Boolean
+  shellfish: Boolean
+  treeNuts: Boolean
+  peanuts: Boolean
+  wheat: Boolean
+  soy: Boolean
+  sesame: Boolean
+}
+
+type Customer @model @auth(rules: [{allow: public}]) @key(name: "byRestaurant", fields: ["restaurantID"]) {
+  id: ID!
+  communicationPreference: Int
+  allergens: Allergens
+  restaurantID: ID
+  user: User! @connection
 }
 
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
-  serverCode: String
   name: String!
-  DiningPreferences: [DiningPreference] @connection(keyName: "byUser", fields: ["id"])
-  CustomerLinks: [Link] @connection(keyName: "byUser", fields: ["id"])
-}
-
-type DiningPreference @model @auth(rules: [{allow: public}]) @key(name: "byUser", fields: ["userID"]) {
-  id: ID!
-  userID: ID!
-  value: String
 }
  
