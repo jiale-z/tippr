@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import './dining_mode_page.dart';
+import './dining_page.dart';
 
 class GuestPage extends StatefulWidget {
   @override

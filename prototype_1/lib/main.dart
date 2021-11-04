@@ -8,10 +8,11 @@ import 'package:amplify_datastore/amplify_datastore.dart';
 import 'package:prototype_1/view/auth_page.dart';
 import 'package:prototype_1/view/login_page.dart';
 import 'package:prototype_1/view/registration_page.dart';
+import 'package:prototype_1/view/guest_page.dart';
 import 'package:prototype_1/view/home_page.dart';
 import 'package:prototype_1/view/customer_page.dart';
 import 'package:prototype_1/view/server_page.dart';
-import 'package:prototype_1/view/dining_mode_page.dart';
+import 'package:prototype_1/view/dining_page.dart';
 //import 'package:prototype_1/view/preferences_page.dart';
 
 import 'package:prototype_1/amplifyconfiguration.dart';
@@ -82,9 +83,9 @@ class _MyAppState extends State<MyApp> {
     return _loading
         ? const MaterialApp(title: 'Loading')
 
-        //These providers are what allow the ViewModels to be used and accessed from
-        // any view within the app, and also what handles the event propogation to update
-        // these views when the viewmodel changes
+        // These providers are what allow the ViewModels to be used and accessed
+        // from any view within the app, and also what handles the event propogation
+        // to update these views when the viewmodel changes
         : MultiProvider(
             providers: [
               ChangeNotifierProvider(
@@ -101,17 +102,17 @@ class _MyAppState extends State<MyApp> {
                 ),
                 initialRoute: '/',
                 routes: {
-                  /*  default page is homepage for testing purposes
-                      eventually it will be authentication page */
-
-                  '/': (context) => HomePage(),
                   '/2': (context) => Dummy2(),
                   //'/3': (context) => PreferencePage(),
 
                   // url quality route names.
+                  /*  default page is homepage for testing purposes
+                      eventually it will be authentication page */
+                  '/': (context) => HomePage(),
                   //'/': (context) => AuthPage(),
                   '/login': (context) => LoginPage(),
                   '/register': (context) => RegistrationPage(),
+                  '/guest': (context) => GuestPage(),
                   '/home': (context) => HomePage(),
                   '/dine': (context) => DiningPage(),
                   '/customer': (context) => CustomerPage(),
