@@ -35,6 +35,8 @@ class RegistrationDemo extends StatefulWidget {
 }
 
 class _RegistrationDemoState extends State<RegistrationDemo> {
+// try instance variables for multi select
+
   @override
   Widget build(BuildContext context) {
     List<ListItem> _userroles = [
