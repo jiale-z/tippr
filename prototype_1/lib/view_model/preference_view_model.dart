@@ -1,20 +1,25 @@
 import 'package:flutter/cupertino.dart';
-import 'package:prototype_1/models/User.dart';
+import 'package:prototype_1/models/ModelProvider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:amplify_flutter/amplify.dart';
-import 'package:prototype_1/models/DiningPreference.dart';
 import 'package:provider/provider.dart';
 import 'package:prototype_1/view_model/session.dart';
 
 class PreferenceViewModel with ChangeNotifier {
   //These are the data fields you will directly access from the Views through Provider.of<PreferenceViewModel>(context).field
   //We use the Session singletone to access the User we already retrieved before
-  User? _user = Session().user;
-  List<DiningPreference>? _preferences;
+  User? _user;
+  Customer? _customer;
+  Restaurant? _restaurant;
+  List<Server>? _serverBios;
 
   //Get methods for necessary fields
   User? get user {
     return _user;
+  }
+
+  Customer? get customer {
+    return _customer;
   }
 
   List<DiningPreference>? get preferences {
@@ -31,7 +36,7 @@ class PreferenceViewModel with ChangeNotifier {
     } catch (e) {
       print(e);
     }
-
+    _user = Session().user;
     //This call is what triggers the Views to update whenever this ViewModel change
     notifyListeners();
   }
@@ -40,8 +45,8 @@ class PreferenceViewModel with ChangeNotifier {
   Future<void> addDiningPreference(String val) async {
     if (_preferences!.isEmpty) {
       // need to add new pref
-      DiningPreference newPref = DiningPreference(
-          userID: _user!.id, value: val);
+      DiningPreference newPref =
+          DiningPreference(userID: _user!.id, value: val);
       try {
         await Amplify.DataStore.save(newPref);
       } catch (e) {
