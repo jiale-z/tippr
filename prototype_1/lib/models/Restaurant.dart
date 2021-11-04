@@ -34,6 +34,7 @@ class Restaurant extends Model {
   final User? _user;
   final List<Server>? _servers;
   final String? _title;
+  final String? _restaurantCode;
 
   @override
   getInstanceType() => classType;
@@ -63,15 +64,20 @@ class Restaurant extends Model {
     return _title;
   }
   
-  const Restaurant._internal({required this.id, menu, required user, servers, title}): _menu = menu, _user = user, _servers = servers, _title = title;
+  String? get restaurantCode {
+    return _restaurantCode;
+  }
   
-  factory Restaurant({String? id, String? menu, required User user, List<Server>? servers, String? title}) {
+  const Restaurant._internal({required this.id, menu, required user, servers, title, restaurantCode}): _menu = menu, _user = user, _servers = servers, _title = title, _restaurantCode = restaurantCode;
+  
+  factory Restaurant({String? id, String? menu, required User user, List<Server>? servers, String? title, String? restaurantCode}) {
     return Restaurant._internal(
       id: id == null ? UUID.getUUID() : id,
       menu: menu,
       user: user,
       servers: servers != null ? List<Server>.unmodifiable(servers) : servers,
-      title: title);
+      title: title,
+      restaurantCode: restaurantCode);
   }
   
   bool equals(Object other) {
@@ -86,7 +92,8 @@ class Restaurant extends Model {
       _menu == other._menu &&
       _user == other._user &&
       DeepCollectionEquality().equals(_servers, other._servers) &&
-      _title == other._title;
+      _title == other._title &&
+      _restaurantCode == other._restaurantCode;
   }
   
   @override
@@ -100,19 +107,21 @@ class Restaurant extends Model {
     buffer.write("id=" + "$id" + ", ");
     buffer.write("menu=" + "$_menu" + ", ");
     buffer.write("user=" + (_user != null ? _user!.toString() : "null") + ", ");
-    buffer.write("title=" + "$_title");
+    buffer.write("title=" + "$_title" + ", ");
+    buffer.write("restaurantCode=" + "$_restaurantCode");
     buffer.write("}");
     
     return buffer.toString();
   }
   
-  Restaurant copyWith({String? id, String? menu, User? user, List<Server>? servers, String? title}) {
+  Restaurant copyWith({String? id, String? menu, User? user, List<Server>? servers, String? title, String? restaurantCode}) {
     return Restaurant(
       id: id ?? this.id,
       menu: menu ?? this.menu,
       user: user ?? this.user,
       servers: servers ?? this.servers,
-      title: title ?? this.title);
+      title: title ?? this.title,
+      restaurantCode: restaurantCode ?? this.restaurantCode);
   }
   
   Restaurant.fromJson(Map<String, dynamic> json)  
@@ -127,10 +136,11 @@ class Restaurant extends Model {
           .map((e) => Server.fromJson(new Map<String, dynamic>.from(e['serializedData'])))
           .toList()
         : null,
-      _title = json['title'];
+      _title = json['title'],
+      _restaurantCode = json['restaurantCode'];
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'menu': _menu, 'user': _user?.toJson(), 'servers': _servers?.map((Server? e) => e?.toJson()).toList(), 'title': _title
+    'id': id, 'menu': _menu, 'user': _user?.toJson(), 'servers': _servers?.map((Server? e) => e?.toJson()).toList(), 'title': _title, 'restaurantCode': _restaurantCode
   };
 
   static final QueryField ID = QueryField(fieldName: "restaurant.id");
@@ -142,6 +152,7 @@ class Restaurant extends Model {
     fieldName: "servers",
     fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (Server).toString()));
   static final QueryField TITLE = QueryField(fieldName: "title");
+  static final QueryField RESTAURANTCODE = QueryField(fieldName: "restaurantCode");
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Restaurant";
     modelSchemaDefinition.pluralName = "Restaurants";
@@ -181,6 +192,12 @@ class Restaurant extends Model {
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: Restaurant.TITLE,
+      isRequired: false,
+      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
+      key: Restaurant.RESTAURANTCODE,
       isRequired: false,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
