@@ -35,6 +35,7 @@ dependencies:
   amplify_flutter: ^0.2.0
   amplify_datastore: ^0.2.0
   amplify_api: ^0.2.0
+  amplify_auth_cognito: ^0.2.0
   multi_select_flutter: ^4.0.0
   image_picker: ^0.8.2
 
