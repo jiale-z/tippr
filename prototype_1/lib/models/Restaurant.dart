@@ -136,7 +136,7 @@ class Restaurant extends Model {
       _restaurantCode = json['restaurantCode'];
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'menu': _menu, 'user': _user?.toJson(), 'servers': _servers?.map((e) => e?.toJson())?.toList(), 'title': _title, 'restaurantCode': _restaurantCode
+    'id': id, 'menu': _menu, 'user': _user?.toJson(), 'servers': _servers?.map((Server? e) => e?.toJson()).toList(), 'title': _title, 'restaurantCode': _restaurantCode
   };
 
   static final QueryField ID = QueryField(fieldName: "restaurant.id");

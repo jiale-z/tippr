@@ -17,3 +17,10 @@
 
 import 'package:amplify_datastore_plugin_interface/amplify_datastore_plugin_interface.dart';
 import 'package:flutter/foundation.dart';
+
+class ServerBio {
+  String bio;
+  String? picture;
+
+  ServerBio(this.bio, [this.picture]);
+}

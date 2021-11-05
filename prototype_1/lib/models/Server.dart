@@ -16,9 +16,9 @@
 // ignore_for_file: public_member_api_docs
 
 import 'ModelProvider.dart';
+import 'ServerBio.dart';
 import 'package:amplify_datastore_plugin_interface/amplify_datastore_plugin_interface.dart';
 import 'package:flutter/foundation.dart';
-
 
 /** This is an auto generated class representing the Server type in your schema. */
 @immutable
@@ -31,136 +31,147 @@ class Server extends Model {
 
   @override
   getInstanceType() => classType;
-  
+
   @override
   String getId() {
     return id;
   }
-  
+
   User get user {
     try {
       return _user!;
-    } catch(e) {
-      throw new DataStoreException(DataStoreExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage, recoverySuggestion: DataStoreExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion, underlyingException: e.toString());
+    } catch (e) {
+      throw new DataStoreException(
+          DataStoreExceptionMessages
+              .codeGenRequiredFieldForceCastExceptionMessage,
+          recoverySuggestion: DataStoreExceptionMessages
+              .codeGenRequiredFieldForceCastRecoverySuggestion,
+          underlyingException: e.toString());
     }
   }
-  
+
   String? get restaurantID {
     return _restaurantID;
   }
-  
+
   ServerBio? get bio {
     return _bio;
   }
-  
-  const Server._internal({required this.id, required user, restaurantID, bio}): _user = user, _restaurantID = restaurantID, _bio = bio;
-  
-  factory Server({String? id, required User user, String? restaurantID, ServerBio? bio}) {
+
+  const Server._internal({required this.id, required user, restaurantID, bio})
+      : _user = user,
+        _restaurantID = restaurantID,
+        _bio = bio;
+
+  factory Server(
+      {String? id, required User user, String? restaurantID, ServerBio? bio}) {
     return Server._internal(
-      id: id == null ? UUID.getUUID() : id,
-      user: user,
-      restaurantID: restaurantID,
-      bio: bio);
+        id: id == null ? UUID.getUUID() : id,
+        user: user,
+        restaurantID: restaurantID,
+        bio: bio);
   }
-  
+
   bool equals(Object other) {
     return this == other;
   }
-  
+
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is Server &&
-      id == other.id &&
-      _user == other._user &&
-      _restaurantID == other._restaurantID &&
-      _bio == other._bio;
+        id == other.id &&
+        _user == other._user &&
+        _restaurantID == other._restaurantID &&
+        _bio == other._bio;
   }
-  
+
   @override
   int get hashCode => toString().hashCode;
-  
+
   @override
   String toString() {
     var buffer = new StringBuffer();
-    
+
     buffer.write("Server {");
     buffer.write("id=" + "$id" + ", ");
     buffer.write("user=" + (_user != null ? _user!.toString() : "null") + ", ");
     buffer.write("restaurantID=" + "$_restaurantID" + ", ");
     buffer.write("bio=" + (_bio != null ? _bio!.toString() : "null"));
     buffer.write("}");
-    
+
     return buffer.toString();
   }
-  
-  Server copyWith({String? id, User? user, String? restaurantID, ServerBio? bio}) {
+
+  Server copyWith(
+      {String? id, User? user, String? restaurantID, ServerBio? bio}) {
     return Server(
-      id: id ?? this.id,
-      user: user ?? this.user,
-      restaurantID: restaurantID ?? this.restaurantID,
-      bio: bio ?? this.bio);
+        id: id ?? this.id,
+        user: user ?? this.user,
+        restaurantID: restaurantID ?? this.restaurantID,
+        bio: bio ?? this.bio);
   }
-  
-  Server.fromJson(Map<String, dynamic> json)  
-    : id = json['id'],
-      _user = json['user']?['serializedData'] != null
-        ? User.fromJson(new Map<String, dynamic>.from(json['user']['serializedData']))
-        : null,
-      _restaurantID = json['restaurantID'],
-      _bio = json['bio'];
-  
+
+  Server.fromJson(Map<String, dynamic> json)
+      : id = json['id'],
+        _user = json['user']?['serializedData'] != null
+            ? User.fromJson(
+                new Map<String, dynamic>.from(json['user']['serializedData']))
+            : null,
+        _restaurantID = json['restaurantID'],
+        _bio = json['bio'];
+
   Map<String, dynamic> toJson() => {
-    'id': id, 'user': _user?.toJson(), 'restaurantID': _restaurantID, 'bio': _bio
-  };
+        'id': id,
+        'user': _user?.toJson(),
+        'restaurantID': _restaurantID,
+        'bio': _bio
+      };
 
   static final QueryField ID = QueryField(fieldName: "server.id");
   static final QueryField USER = QueryField(
-    fieldName: "user",
-    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (User).toString()));
+      fieldName: "user",
+      fieldType: ModelFieldType(ModelFieldTypeEnum.model,
+          ofModelName: (User).toString()));
   static final QueryField RESTAURANTID = QueryField(fieldName: "restaurantID");
   static final QueryField BIO = QueryField(fieldName: "bio");
-  static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
+  static var schema =
+      Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Server";
     modelSchemaDefinition.pluralName = "Servers";
-    
+
     modelSchemaDefinition.authRules = [
-      AuthRule(
-        authStrategy: AuthStrategy.PUBLIC,
-        operations: [
-          ModelOperation.CREATE,
-          ModelOperation.UPDATE,
-          ModelOperation.DELETE,
-          ModelOperation.READ
-        ])
+      AuthRule(authStrategy: AuthStrategy.PUBLIC, operations: [
+        ModelOperation.CREATE,
+        ModelOperation.UPDATE,
+        ModelOperation.DELETE,
+        ModelOperation.READ
+      ])
     ];
-    
+
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
-    
+
     modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
-      key: Server.USER,
-      isRequired: true,
-      targetName: "serverUserId",
-      ofModelName: (User).toString()
-    ));
-    
+        key: Server.USER,
+        isRequired: true,
+        targetName: "serverUserId",
+        ofModelName: (User).toString()));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Server.RESTAURANTID,
-      isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
-    
+        key: Server.RESTAURANTID,
+        isRequired: false,
+        ofType: ModelFieldType(ModelFieldTypeEnum.string)));
+
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Server.BIO,
-      isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
+        key: Server.BIO,
+        isRequired: false,
+        ofType: ModelFieldType(ModelFieldTypeEnum.string)));
   });
 }
 
 class _ServerModelType extends ModelType<Server> {
   const _ServerModelType();
-  
+
   @override
   Server fromJson(Map<String, dynamic> jsonData) {
     return Server.fromJson(jsonData);
