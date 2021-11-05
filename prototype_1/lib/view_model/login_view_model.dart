@@ -11,16 +11,15 @@ class LoginViewModel with ChangeNotifier {
   //These are the data fields you will directly access from the Views through Provider.of<PreferenceViewModel>(context).field
   //We use the Session singleton to access the User we already retrieved before
   User? _user = Session().user;
-  List<DiningPreference>? _preferences;
   // If registered user has signed in successfully
   // successful login, go to home screen
-  bool isSignedIn = false;
+  bool _isSignedIn = false;
   // If new user does first stage of registration, CONFIRMATION MISSING
   // prompt user to input confirmation code from email
-  bool isSignUpComplete = false;
+  bool _isSignUpComplete = false;
   // If new user does second stage of registration, CONFIRMATION DONE
   // successful confirmation, go to home screen
-  bool isConfirmComplete = false;
+  bool _isConfirmComplete = false;
   User? userTemp;
 
   //Get methods for necessary fields
@@ -28,8 +27,17 @@ class LoginViewModel with ChangeNotifier {
     return _user;
   }
 
-  List<DiningPreference>? get preferences {
-    return _preferences;
+  //Get methods for necessary fields
+  bool get isSignedIn {
+    return _isSignedIn;
+  }
+  //Get methods for necessary fields
+  bool get isSignUpComplete {
+    return _isSignUpComplete;
+  }
+  //Get methods for necessary fields
+  bool get isConfirmComplete {
+    return _isConfirmComplete;
   }
 
   Future<void> login(String email, String password) async {
@@ -39,7 +47,7 @@ class LoginViewModel with ChangeNotifier {
         username: email,
         password: password,
       );
-      isSignedIn = res.isSignedIn;
+      _isSignedIn = res.isSignedIn;
     } on AuthException catch (e) {
       print(e.message);
     }
@@ -72,7 +80,7 @@ class LoginViewModel with ChangeNotifier {
               userAttributes: userAttributes
           )
       );
-      isSignUpComplete = res.isSignUpComplete;
+      _isSignUpComplete = res.isSignUpComplete;
     } on AuthException catch (e) {
       print(e.message);
     }
@@ -85,7 +93,7 @@ class LoginViewModel with ChangeNotifier {
           username: userTemp!.email,
           confirmationCode: confirmationCode,
       );
-      isConfirmComplete = res.isSignUpComplete;
+      _isConfirmComplete = res.isSignUpComplete;
       if (isConfirmComplete) {
         try {
           await Amplify.DataStore.save(userTemp!);

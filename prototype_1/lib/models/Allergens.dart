@@ -19,24 +19,25 @@ import 'package:amplify_datastore_plugin_interface/amplify_datastore_plugin_inte
 import 'package:flutter/foundation.dart';
 
 class Allergens {
-  bool milk;
-  bool eggs;
-  bool fish;
-  bool shellfish;
-  bool treeNuts;
-  bool peanuts;
-  bool wheat;
-  bool soy;
-  bool sesame;
+  bool? milk;
+  bool? eggs;
+  bool? fish;
+  bool? shellfish;
+  bool? treeNuts;
+  bool? peanuts;
+  bool? wheat;
+  bool? soy;
+  bool? sesame;
 
-  Allergens(
-      {this.milk = false,
-      this.eggs = false,
-      this.fish = false,
-      this.shellfish = false,
-      this.treeNuts = false,
-      this.peanuts = false,
-      this.wheat = false,
-      this.soy = false,
-      this.sesame = false});
+  Allergens(List<bool> allergens) {
+    milk = allergens[0];
+    eggs = allergens[1];
+    fish = allergens[2];
+    shellfish = allergens[3];
+    treeNuts = allergens[4];
+    peanuts = allergens[5];
+    wheat = allergens[6];
+    soy = allergens[7];
+    sesame = allergens[8];
+  }
 }
