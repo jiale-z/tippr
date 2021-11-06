@@ -12,6 +12,8 @@ class GuestPage extends StatefulWidget {
 }
 
 class _GuestPageState extends State<GuestPage> {
+  double level = 0;
+  double newLevel = 0;
   @override
   void initState() {
     super.initState();
@@ -55,8 +57,30 @@ class _GuestPageState extends State<GuestPage> {
               padding: const EdgeInsets.all(0.0),
               child: Center(
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.025,
+                  height: MediaQuery.of(context).size.height * 0.05,
                 ),
+              ),
+            ),
+            Container(
+              child: Text(
+                'Communication Level:',
+                style: TextStyle(
+                    color: Colors.black.withOpacity(1.00), fontSize: 18),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.10,
+              width: MediaQuery.of(context).size.width * 1,
+              child: Slider(
+                value: level,
+                min: 0,
+                max: 5,
+                divisions: 5,
+                label: "$level",
+                onChanged: (newLevel) {
+                  setState(() => level = newLevel);
+                },
               ),
             ),
             Padding(

@@ -46,11 +46,29 @@ class _CustomerPageState extends State<CustomerPage> {
               ),
             ),
             Padding(
+              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: TextField(
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Preferred Name',
+                    hintText: 'Enter your preferred name'),
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.all(0.0),
               child: Center(
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.025,
+                  height: MediaQuery.of(context).size.height * 0.05,
                 ),
+              ),
+            ),
+            Container(
+              child: Text(
+                'Communication Level:',
+                style: TextStyle(
+                    color: Colors.black.withOpacity(1.00), fontSize: 18),
+                textAlign: TextAlign.center,
               ),
             ),
             Container(
