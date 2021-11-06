@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import './home_page.dart';
+import './customer_page.dart';
+import './server_page.dart';
+import './restaurant_rep.dart';
 import 'package:flutter/widgets.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
@@ -14,6 +17,10 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
+  List<String> _userroles = ["Customer", "Server", "Restaurant Representative"];
+  String _selectedrole = "Customer";
+  String? _chosenValue;
+
   @override
   void initState() {
     super.initState();
@@ -22,33 +29,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: RegistrationDemo(),
-    );
-  }
-}
-
-class RegistrationDemo extends StatefulWidget {
-  @override
-  _RegistrationDemoState createState() => _RegistrationDemoState();
-}
-
-class _RegistrationDemoState extends State<RegistrationDemo> {
-// try instance variables for multi select
-
-  @override
-  Widget build(BuildContext context) {
-    List<ListItem> _userroles = [
-      ListItem(id: 1, name: 'Customer'),
-      ListItem(id: 2, name: 'Server'),
-      ListItem(id: 3, name: 'Restaurant Representative')
-    ];
-    List<Object?> _selecteduserroles;
+    // List<ListItem> _userroles = [
+    //   ListItem(id: 1, name: 'Customer'),
+    //   ListItem(id: 2, name: 'Server'),
+    //   ListItem(id: 3, name: 'Restaurant Representative')
+    // ];
+    // List<Object?> _selecteduserroles;
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("Registration Page"),
+        automaticallyImplyLeading: true,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -92,14 +83,42 @@ class _RegistrationDemoState extends State<RegistrationDemo> {
             Container(
               height: MediaQuery.of(context).size.height * 0.10,
               width: MediaQuery.of(context).size.width * 1,
-              child: MultiSelectDialogField(
-                title: Text("Select User Roles"),
-                items: _userroles
-                    .map((e) => MultiSelectItem<ListItem>(e, e.name))
-                    .toList(),
-                listType: MultiSelectListType.CHIP,
-                onConfirm: (values) {
-                  _selecteduserroles = values;
+              // child: MultiSelectDialogField(
+              //   title: Text("Select User Roles"),
+              //   items: _userroles
+              //       .map((e) => MultiSelectItem<ListItem>(e, e.name))
+              //       .toList(),
+              //   listType: MultiSelectListType.CHIP,
+              //   onConfirm: (values) {
+              //     _selecteduserroles = values;
+              //   },
+              // ),
+              child: DropdownButton<String>(
+                alignment: Alignment.center,
+                value: _chosenValue,
+                //elevation: 5,
+                style: TextStyle(color: Colors.black),
+                items: <String>[
+                  'Customer',
+                  'Server',
+                  'Restaurant Representative',
+                ].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                hint: Text(
+                  "Please select your role",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 25,
+                      fontWeight: FontWeight.w600),
+                ),
+                onChanged: (String? value) {
+                  setState(() {
+                    _chosenValue = value;
+                  });
                 },
               ),
             ),
@@ -130,7 +149,18 @@ class _RegistrationDemoState extends State<RegistrationDemo> {
     //call viewmodel here _selecteduserroles has data
 
     //need to change paths later
-    Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage()));
+    if (_chosenValue != null) {
+      if (_chosenValue == "Customer") {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (_) => CustomerPage()));
+      } else if (_chosenValue == "Server") {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (_) => ServerPage()));
+      } else {
+        Navigator.push(
+            context, MaterialPageRoute(builder: (_) => RestaurantRepPage()));
+      }
+    }
   }
 }
 

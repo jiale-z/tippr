@@ -21,25 +21,11 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: LoginDemo(),
-    );
-  }
-}
-
-class LoginDemo extends StatefulWidget {
-  @override
-  _LoginDemoState createState() => _LoginDemoState();
-}
-
-class _LoginDemoState extends State<LoginDemo> {
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("Login Page"),
+        automaticallyImplyLeading: true,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -119,6 +105,7 @@ class _LoginDemoState extends State<LoginDemo> {
   login() {
     //call viewmodel here
 
-    Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => HomePage()));
   }
 }
