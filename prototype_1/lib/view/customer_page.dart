@@ -13,8 +13,8 @@ class CustomerPage extends StatefulWidget {
 }
 
 class _CustomerPageState extends State<CustomerPage> {
-  double level = 0;
-  double newLevel = 0;
+  double level = 1;
+  double newLevel = 1;
 
   @override
   void initState() {
