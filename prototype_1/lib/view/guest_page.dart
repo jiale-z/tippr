@@ -70,14 +70,30 @@ class _GuestPageState extends State<GuestPage> {
               ),
             ),
             Container(
+              child: Text(
+                '1- I prefer quieter settings.',
+                style: TextStyle(
+                    color: Colors.black.withOpacity(1.00), fontSize: 12),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Container(
+              child: Text(
+                '5- Talk to me.',
+                style: TextStyle(
+                    color: Colors.black.withOpacity(1.00), fontSize: 12),
+                textAlign: TextAlign.center,
+              ),
+            ),
+            Container(
               height: MediaQuery.of(context).size.height * 0.10,
               width: MediaQuery.of(context).size.width * 1,
               child: Slider(
                 value: level,
-                min: 0,
+                min: 1,
                 max: 5,
                 divisions: 5,
-                label: "$level",
+                label: level.round().toString(),
                 onChanged: (newLevel) {
                   setState(() => level = newLevel);
                 },

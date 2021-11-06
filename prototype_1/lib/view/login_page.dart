@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import './home_page.dart';
 import 'package:flutter/widgets.dart';
+import './dining_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -106,6 +107,6 @@ class _LoginPageState extends State<LoginPage> {
     //call viewmodel here
 
     Navigator.push(
-        context, MaterialPageRoute(builder: (context) => HomePage()));
+        context, MaterialPageRoute(builder: (context) => DiningPage()));
   }
 }
