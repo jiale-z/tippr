@@ -26,7 +26,7 @@ class _CustomerPageState extends State<CustomerPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('Customer Registration'),
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: true,
       ),
       body: SingleChildScrollView(
         child: Column(

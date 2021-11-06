@@ -45,7 +45,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
         child: Column(
           children: <Widget>[
             Padding(
-              padding: const EdgeInsets.only(top: 60.0),
+              padding: const EdgeInsets.only(top: 30.0),
               child: Center(
                 child: Container(
                   width: MediaQuery.of(context).size.width * 1,
