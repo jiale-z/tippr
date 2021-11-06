@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import './dining_page.dart';
+import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:multiselect/multiselect.dart';
 
 class GuestPage extends StatefulWidget {
   @override
@@ -14,6 +16,8 @@ class GuestPage extends StatefulWidget {
 class _GuestPageState extends State<GuestPage> {
   double level = 1;
   double newLevel = 1;
+  List<String> selected = [];
+
   @override
   void initState() {
     super.initState();
@@ -57,7 +61,49 @@ class _GuestPageState extends State<GuestPage> {
               padding: const EdgeInsets.all(0.0),
               child: Center(
                 child: Container(
-                  height: MediaQuery.of(context).size.height * 0.05,
+                  height: MediaQuery.of(context).size.height * 0.025,
+                ),
+              ),
+            ),
+            Container(
+              height: MediaQuery.of(context).size.height * 0.10,
+              width: MediaQuery.of(context).size.width * .75,
+              // child: MultiSelectDialogField(
+              //   title: Text("Select User Roles"),
+              //   items: _userroles
+              //       .map((e) => MultiSelectItem<ListItem>(e, e.name))
+              //       .toList(),
+              //   listType: MultiSelectListType.CHIP,
+              //   onConfirm: (values) {
+              //     _selecteduserroles = values;
+              //   },
+              // ),
+              child: DropDownMultiSelect(
+                onChanged: (List<String> x) {
+                  setState(() {
+                    selected = x;
+                  });
+                },
+                options: [
+                  'Milk',
+                  'Eggs',
+                  'Fish',
+                  'Shellfish',
+                  'Tree Nuts',
+                  'Peanuts',
+                  'Wheat',
+                  'Soy',
+                  'Sesame'
+                ],
+                selectedValues: selected,
+                whenEmpty: 'Select the foods that you are allergic to.',
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: Center(
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.025,
                 ),
               ),
             ),
@@ -87,7 +133,7 @@ class _GuestPageState extends State<GuestPage> {
             ),
             Container(
               height: MediaQuery.of(context).size.height * 0.10,
-              width: MediaQuery.of(context).size.width * 1,
+              width: MediaQuery.of(context).size.width * 0.85,
               child: Slider(
                 value: level,
                 min: 1,

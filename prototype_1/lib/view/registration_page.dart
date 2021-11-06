@@ -80,9 +80,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     hintText: 'Enter secure password'),
               ),
             ),
+            Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: Center(
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.025,
+                ),
+              ),
+            ),
             Container(
               height: MediaQuery.of(context).size.height * 0.10,
-              width: MediaQuery.of(context).size.width * 1,
+              width: MediaQuery.of(context).size.width * .65,
               // child: MultiSelectDialogField(
               //   title: Text("Select User Roles"),
               //   items: _userroles
@@ -112,7 +120,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   "Please select your role",
                   style: TextStyle(
                       color: Colors.black,
-                      fontSize: 25,
+                      fontSize: 20,
                       fontWeight: FontWeight.w600),
                 ),
                 onChanged: (String? value) {
