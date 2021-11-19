@@ -62,7 +62,7 @@ class _ServerPageCopyState extends State<ServerPageCopy> {
                   decoration: BoxDecoration(
                       color: Colors.blue,
                       borderRadius: BorderRadius.circular(20)),
-                  child: TextButton(
+                  child: MaterialButton(
                     child: Text(
                       "Pick Image from Gallery",
                       style: TextStyle(color: Colors.white, fontSize: 25),
@@ -93,7 +93,7 @@ class _ServerPageCopyState extends State<ServerPageCopy> {
                   decoration: BoxDecoration(
                       color: Colors.blue,
                       borderRadius: BorderRadius.circular(20)),
-                  child: TextButton(
+                  child: MaterialButton(
                     child: Text(
                       "Pick Image from Camera",
                       style: TextStyle(color: Colors.white, fontSize: 25),
@@ -207,7 +207,7 @@ class ImageFromGalleryExState extends State<ImageFromGalleryEx> {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-              child: TextButton(
+              child: MaterialButton(
                 child: Text(
                   "Continue",
                   style: TextStyle(color: Colors.white, fontSize: 25),

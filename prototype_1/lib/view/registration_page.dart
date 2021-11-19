@@ -138,7 +138,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               width: MediaQuery.of(context).size.width * 1,
               decoration: BoxDecoration(
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
-              child: TextButton(
+              child: MaterialButton(
                 onPressed: () {
                   showDialog(
                     context: context,

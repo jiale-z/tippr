@@ -154,7 +154,7 @@ class _GuestPageState extends State<GuestPage> {
                 decoration: BoxDecoration(
                     color: Colors.blue,
                     borderRadius: BorderRadius.circular(20)),
-                child: TextButton(
+                child: MaterialButton(
                   onPressed: () {
                     dining();
                     // Navigator.push(

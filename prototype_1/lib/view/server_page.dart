@@ -88,7 +88,7 @@ class _ServerPageState extends State<ServerPage> {
                 decoration: BoxDecoration(
                     color: Colors.blue,
                     borderRadius: BorderRadius.circular(20)),
-                child: TextButton(
+                child: MaterialButton(
                   onPressed: () {
                     continue_to_image();
                     // Navigator.push(

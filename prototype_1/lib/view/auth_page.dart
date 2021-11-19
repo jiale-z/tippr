@@ -54,7 +54,7 @@ class _AuthPageState extends State<AuthPage> {
                 decoration: BoxDecoration(
                     color: Colors.blue,
                     borderRadius: BorderRadius.circular(20)),
-                child: TextButton(
+                child: MaterialButton(
                   onPressed: () {
                     login();
                     // Navigator.push(
@@ -84,7 +84,7 @@ class _AuthPageState extends State<AuthPage> {
                 decoration: BoxDecoration(
                     color: Colors.blue,
                     borderRadius: BorderRadius.circular(20)),
-                child: TextButton(
+                child: MaterialButton(
                   onPressed: () {
                     register();
                     // Navigator.push(
@@ -114,7 +114,7 @@ class _AuthPageState extends State<AuthPage> {
                 decoration: BoxDecoration(
                     color: Colors.blue,
                     borderRadius: BorderRadius.circular(20)),
-                child: TextButton(
+                child: MaterialButton(
                   onPressed: () {
                     guest();
                     // Navigator.push(

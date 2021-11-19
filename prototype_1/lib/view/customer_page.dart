@@ -163,7 +163,7 @@ class _CustomerPageState extends State<CustomerPage> {
                 decoration: BoxDecoration(
                     color: Colors.blue,
                     borderRadius: BorderRadius.circular(20)),
-                child: TextButton(
+                child: MaterialButton(
                   onPressed: () {
                     login();
                     // Navigator.push(
