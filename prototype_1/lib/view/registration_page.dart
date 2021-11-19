@@ -27,6 +27,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
     // Provider.of<HomeViewModel>(context, listen: false).fetchUserData();
   }
 
+  String codeDialog = "";
+  String valueText = "";
+
   @override
   Widget build(BuildContext context) {
     // List<ListItem> _userroles = [
@@ -137,7 +140,68 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: TextButton(
                 onPressed: () {
-                  registration();
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      // return Dialog(
+                      //   shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(40)),
+                      //   elevation: 16,
+                      //   child: Container(
+                      //     child: ListView(
+                      //       shrinkWrap: true,
+                      //       children: <Widget>[
+                      //         AlertDialog(
+                      //           title: Text('TextField in Dialog'),
+                      //           content: TextField(
+                      //             onChanged: (value) {},
+                      //             decoration: InputDecoration(
+                      //                 hintText: "Text Field in Dialog"),
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // );
+                      return AlertDialog(
+                        title: Text('Enter Confirmation Code Sent To Email'),
+                        content: TextField(
+                          onChanged: (value) {},
+                          decoration: InputDecoration(
+                              hintText:
+                                  "Enter Confirmation Code Sent To Email"),
+                        ),
+                        actions: <Widget>[
+                          MaterialButton(
+                            color: Colors.green,
+                            textColor: Colors.white,
+                            child: Text('OK'),
+                            onPressed: () {
+                              setState(() {
+                                codeDialog = valueText;
+                                Navigator.pop(context);
+                                checkCode();
+                              });
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                  //               showDialog(
+                  //                 context:context,
+                  //                 builder: (context) {
+                  //                   return AlertDialog(
+                  //     title: Text('TextField in Dialog'),
+                  //     content: TextField(
+                  //       onChanged: (value) { },
+                  //       decoration: InputDecoration(hintText: "Text Field in Dialog"),
+                  //     ),
+                  // ),
+                  //                 }
+
+                  // registration();
+
                   // Navigator.push(
                   //     context, MaterialPageRoute(builder: (_) => HomePage()));
                 },
@@ -151,6 +215,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
         ),
       ),
     );
+  }
+
+  checkCode() {
+    //check confirmation code here
+    //if good continue to registration (just put registration()),
+    //else write message saying wrong code
+    registration();
   }
 
   registration() {

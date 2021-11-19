@@ -4,6 +4,8 @@ import 'package:image_picker/image_picker.dart';
 import 'dart:async';
 import 'dart:io';
 
+enum ImageSourceType { gallery, camera }
+
 class ServerPageCopy extends StatefulWidget {
   @override
   _ServerPageCopyState createState() => _ServerPageCopyState();
@@ -20,23 +22,6 @@ class _ServerPageCopyState extends State<ServerPageCopy> {
     super.initState();
     // Provider.of<HomeViewModel>(context, listen: false).fetchUserData();
   }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: HomePageTest(),
-    );
-  }
-}
-
-enum ImageSourceType { gallery, camera }
-
-class HomePageTest extends StatelessWidget {
-  const HomePageTest({Key? key}) : super(key: key);
 
   void _handleURLButtonPress(BuildContext context, var type) {
     Navigator.push(
