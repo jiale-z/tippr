@@ -185,6 +185,11 @@ class _CustomerPageState extends State<CustomerPage> {
   login() {
     //call viewmodel here
 
+    //would need to check roles on each page (customer, server, and rest rep)
+    //to determine what the next page should be
+    //would have to retrieve roles from aws
+    //check both server and rep here
+
     Navigator.push(context, MaterialPageRoute(builder: (_) => DiningPage()));
   }
 }

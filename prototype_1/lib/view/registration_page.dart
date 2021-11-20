@@ -3,6 +3,9 @@ import './home_page.dart';
 import './customer_page.dart';
 import './server_page.dart';
 import './restaurant_rep.dart';
+import 'package:multiselect/multiselect.dart';
+
+// import './confirmation_page.dart';
 import 'package:flutter/widgets.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 
@@ -20,6 +23,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   List<String> _userroles = ["Customer", "Server", "Restaurant Representative"];
   String _selectedrole = "Customer";
   String? _chosenValue;
+  List<String> selected = [];
 
   @override
   void initState() {
@@ -83,54 +87,68 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     hintText: 'Enter secure password'),
               ),
             ),
+            // Padding(
+            //   padding: const EdgeInsets.all(0.0),
+            //   child: Center(
+            //     child: Container(
+            //       height: MediaQuery.of(context).size.height * 0.025,
+            //     ),
+            //   ),
+            // ),
+            // Container(
+            //   height: MediaQuery.of(context).size.height * 0.10,
+            //   width: MediaQuery.of(context).size.width * .65,
+            //   child: MultiSelectDialogField(
+            //     title: Text("Select User Roles"),
+            //     items: _userroles
+            //         .map((e) => MultiSelectItem<ListItem>(e, e.name))
+            //         .toList(),
+            //     listType: MultiSelectListType.CHIP,
+            //     onConfirm: (values) {
+            //       _selecteduserroles = values;
+            //     },
+            //   ),
+            //   child: DropdownButton<String>(
+            //     alignment: Alignment.center,
+            //     value: _chosenValue,
+            //     //elevation: 5,
+            //     style: TextStyle(color: Colors.black),
+            //     items: <String>[
+            //       'Customer',
+            //       'Server',
+            //       'Restaurant Representative',
+            //     ].map<DropdownMenuItem<String>>((String value) {
+            //       return DropdownMenuItem<String>(
+            //         value: value,
+            //         child: Text(value),
+            //       );
+            //     }).toList(),
+            //     hint: Text(
+            //       "Please select your role",
+            //       style: TextStyle(
+            //           color: Colors.black,
+            //           fontSize: 20,
+            //           fontWeight: FontWeight.w600),
+            //     ),
+            //     onChanged: (String? value) {
+            //       setState(() {
+            //         _chosenValue = value;
+            //       });
+            //     },
+            //   ),
+            // ),
             Padding(
-              padding: const EdgeInsets.all(0.0),
-              child: Center(
-                child: Container(
-                  height: MediaQuery.of(context).size.height * 0.025,
-                ),
-              ),
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.10,
-              width: MediaQuery.of(context).size.width * .65,
-              // child: MultiSelectDialogField(
-              //   title: Text("Select User Roles"),
-              //   items: _userroles
-              //       .map((e) => MultiSelectItem<ListItem>(e, e.name))
-              //       .toList(),
-              //   listType: MultiSelectListType.CHIP,
-              //   onConfirm: (values) {
-              //     _selecteduserroles = values;
-              //   },
-              // ),
-              child: DropdownButton<String>(
-                alignment: Alignment.center,
-                value: _chosenValue,
-                //elevation: 5,
-                style: TextStyle(color: Colors.black),
-                items: <String>[
-                  'Customer',
-                  'Server',
-                  'Restaurant Representative',
-                ].map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-                hint: Text(
-                  "Please select your role",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600),
-                ),
-                onChanged: (String? value) {
+              padding: const EdgeInsets.only(
+                  left: 15.0, right: 15.0, top: 15, bottom: 0),
+              child: DropDownMultiSelect(
+                onChanged: (List<String> x) {
                   setState(() {
-                    _chosenValue = value;
+                    selected = x;
                   });
                 },
+                options: ['Customer', 'Server', 'Restaurant Representative'],
+                selectedValues: selected,
+                whenEmpty: 'Select your roles',
               ),
             ),
             Container(
@@ -173,7 +191,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ),
                         actions: <Widget>[
                           MaterialButton(
-                            color: Colors.green,
+                            color: Colors.blue,
                             textColor: Colors.white,
                             child: Text('OK'),
                             onPressed: () {
@@ -228,14 +246,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
     //call viewmodel here _selecteduserroles has data
 
     //need to change paths later
-    if (_chosenValue != null) {
-      if (_chosenValue == "Customer") {
+    if (selected.isNotEmpty) {
+      if (selected.contains("Customer")) {
         Navigator.push(
             context, MaterialPageRoute(builder: (_) => CustomerPage()));
-      } else if (_chosenValue == "Server") {
+      } else if (selected.contains("Server")) {
         Navigator.push(
             context, MaterialPageRoute(builder: (_) => ServerPage()));
-      } else {
+      } else if (selected.contains("Restaurant Representative")) {
         Navigator.push(
             context, MaterialPageRoute(builder: (_) => RestaurantRepPage()));
       }

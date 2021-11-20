@@ -110,6 +110,8 @@ class _ServerPageState extends State<ServerPage> {
   continue_to_image() {
     //call viewmodel here
 
+    //look at customer_page, check for rep here
+
     Navigator.push(
         context, MaterialPageRoute(builder: (_) => ServerPageCopy()));
   }
