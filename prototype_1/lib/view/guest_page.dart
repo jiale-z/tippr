@@ -117,7 +117,7 @@ class _GuestPageState extends State<GuestPage> {
             ),
             Container(
               child: Text(
-                '1- I prefer quieter settings.',
+                '1- Less Convo',
                 style: TextStyle(
                     color: Colors.black.withOpacity(1.00), fontSize: 12),
                 textAlign: TextAlign.center,
@@ -125,7 +125,7 @@ class _GuestPageState extends State<GuestPage> {
             ),
             Container(
               child: Text(
-                '5- Talk to me.',
+                '5- More Convo',
                 style: TextStyle(
                     color: Colors.black.withOpacity(1.00), fontSize: 12),
                 textAlign: TextAlign.center,
@@ -137,8 +137,8 @@ class _GuestPageState extends State<GuestPage> {
               child: Slider(
                 value: level,
                 min: 1,
-                max: 5,
-                divisions: 5,
+                max: 3,
+                divisions: 2,
                 label: level.round().toString(),
                 onChanged: (newLevel) {
                   setState(() => level = newLevel);
