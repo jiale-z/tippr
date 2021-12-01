@@ -94,7 +94,8 @@ class _CustomerPageState extends State<CustomerPage> {
                   'Peanuts',
                   'Wheat',
                   'Soy',
-                  'Sesame'
+                  'Sesame',
+                  'Other'
                 ],
                 selectedValues: selected,
                 whenEmpty: 'Select the foods that you are allergic to.',
