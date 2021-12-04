@@ -23,9 +23,7 @@ import 'package:prototype_1/models/ModelProvider.dart';
 import 'package:provider/provider.dart';
 
 import 'view_model/home_view_model.dart';
-import 'view_model/preference_view_model.dart';
-import 'view/dummy.dart';
-import 'view/dummy_2.dart';
+
 import 'view/home_page.dart';
 
 import 'package:prototype_1/models/User.dart';
@@ -93,18 +91,15 @@ class _MyAppState extends State<MyApp> {
               ChangeNotifierProvider(
                 create: (_) => HomeViewModel(),
               ),
-              ChangeNotifierProvider(
-                create: (_) => PreferenceViewModel(),
-              )
             ],
             child: MaterialApp(
                 title: 'Tippr',
                 theme: ThemeData(
                   primarySwatch: Colors.blue,
                 ),
-                initialRoute: '/',
+                initialRoute: '/login',
                 routes: {
-                  '/2': (context) => Dummy2(),
+                  //'/2': (context) => Dummy2(),
                   //'/3': (context) => PreferencePage(),
 
                   // url quality route names.

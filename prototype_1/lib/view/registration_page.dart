@@ -239,6 +239,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     //check confirmation code here
     //if good continue to registration (just put registration()),
     //else write message saying wrong code
+
     registration();
   }
 

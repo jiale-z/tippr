@@ -10,7 +10,7 @@ class Session {
   }
 
   Session._internal() {
-    _user = User(name: '');
+    _user = User(name: '', email: '');
   }
 
   setUser(User newUser) {

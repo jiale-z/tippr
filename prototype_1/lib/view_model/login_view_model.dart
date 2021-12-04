@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:prototype_1/models/User.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:amplify_flutter/amplify.dart';
-import 'package:prototype_1/models/DiningPreference.dart';
 import 'package:provider/provider.dart';
 import 'package:prototype_1/view_model/session.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
@@ -31,10 +30,12 @@ class LoginViewModel with ChangeNotifier {
   bool get isSignedIn {
     return _isSignedIn;
   }
+
   //Get methods for necessary fields
   bool get isSignUpComplete {
     return _isSignUpComplete;
   }
+
   //Get methods for necessary fields
   bool get isConfirmComplete {
     return _isConfirmComplete;
@@ -76,10 +77,7 @@ class LoginViewModel with ChangeNotifier {
       SignUpResult res = await Amplify.Auth.signUp(
           username: email,
           password: password,
-          options: CognitoSignUpOptions(
-              userAttributes: userAttributes
-          )
-      );
+          options: CognitoSignUpOptions(userAttributes: userAttributes));
       _isSignUpComplete = res.isSignUpComplete;
     } on AuthException catch (e) {
       print(e.message);
@@ -90,8 +88,8 @@ class LoginViewModel with ChangeNotifier {
   Future<void> confirmRegistration(String confirmationCode) async {
     try {
       SignUpResult res = await Amplify.Auth.confirmSignUp(
-          username: userTemp!.email,
-          confirmationCode: confirmationCode,
+        username: userTemp!.email,
+        confirmationCode: confirmationCode,
       );
       _isConfirmComplete = res.isSignUpComplete;
       if (isConfirmComplete) {

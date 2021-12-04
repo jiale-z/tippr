@@ -10,6 +10,11 @@
       "StackName": "amplify-tippr-staging-11202",
       "StackId": "arn:aws:cloudformation:us-east-2:662454231825:stack/amplify-tippr-staging-11202/93d18280-3079-11ec-ad20-0a25de07dce2",
       "AmplifyAppId": "d1mb22k0yhomxe"
+    },
+    "categories": {
+      "auth": {
+        "tippr77fcaed1": {}
+      }
     }
   }
 }

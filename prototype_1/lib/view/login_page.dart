@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:prototype_1/view/registration_page.dart';
 import './home_page.dart';
 import 'package:flutter/widgets.dart';
 import './dining_page.dart';
@@ -52,7 +53,7 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
-                    hintText: 'Enter valid email id as abc@gmail.com'),
+                    hintText: 'example@gmail.com'),
               ),
             ),
             Padding(
@@ -96,7 +97,11 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.20,
             ),
-            Text('New User? Create Account')
+            TextButton(
+                onPressed: () {
+                  register();
+                },
+                child: Text("New to Tippr? Create an Account"))
           ],
         ),
       ),
@@ -108,5 +113,10 @@ class _LoginPageState extends State<LoginPage> {
 
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => DiningPage()));
+  }
+
+  register() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => RegistrationPage()));
   }
 }
