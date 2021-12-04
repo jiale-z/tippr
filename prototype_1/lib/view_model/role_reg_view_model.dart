@@ -10,7 +10,7 @@ import 'package:prototype_1/view_model/session.dart';
 import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
 import 'dart:math';
 
-class CustomerRegViewModel with ChangeNotifier {
+class RoleRegViewModel with ChangeNotifier {
   //These are the data fields you will directly access from the Views through Provider.of<PreferenceViewModel>(context).field
   //We use the Session singleton to access the User we already retrieved before
   User? _user = Session().user;

@@ -18,6 +18,9 @@ import 'package:prototype_1/view/dining_page.dart';
 
 import 'package:prototype_1/amplifyconfiguration.dart';
 import 'package:prototype_1/models/ModelProvider.dart';
+import 'package:prototype_1/view_model/dining_view_model.dart';
+import 'package:prototype_1/view_model/login_view_model.dart';
+import 'package:prototype_1/view_model/role_reg_view_model.dart';
 //import 'package:prototype_1/route_generator.dart';
 
 import 'package:provider/provider.dart';
@@ -91,6 +94,9 @@ class _MyAppState extends State<MyApp> {
               ChangeNotifierProvider(
                 create: (_) => HomeViewModel(),
               ),
+              ChangeNotifierProvider(create: (_) => DiningViewModel()),
+              ChangeNotifierProvider(create: (_) => LoginViewModel()),
+              ChangeNotifierProvider(create: (_) => RoleRegViewModel()),
             ],
             child: MaterialApp(
                 title: 'Tippr',
