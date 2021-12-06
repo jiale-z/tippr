@@ -129,7 +129,7 @@ class _DiningPageState extends State<DiningPage> {
       title: 'TIPPR_S4 demo',
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Dine:))'),
+          title: const Text('Dine:)'),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios),
             tooltip: 'Back',
@@ -142,7 +142,7 @@ class _DiningPageState extends State<DiningPage> {
           child: ListView(
             physics: ClampingScrollPhysics(),
             children: <Widget>[
-              // 1. Restaurant related buttons
+              // 1. Restaurant buttons
               Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -163,7 +163,7 @@ class _DiningPageState extends State<DiningPage> {
               ),
               SizedBox(height: 20),
 
-              // 2. User related items
+              // 2. Icon Column
               Container(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -178,7 +178,8 @@ class _DiningPageState extends State<DiningPage> {
                     ), */
                     ElevatedButton(
                       onPressed: () {},
-                      child: const Text('audio level + red/green background'),
+                      //child: const Text('audio level + red/green background'),
+                      child: const Text('                                   '),
                       style: indicators,
                     ),
                   ],
@@ -186,7 +187,7 @@ class _DiningPageState extends State<DiningPage> {
               ),
               SizedBox(height: 20),
 
-              // 3. Server Signaling Setup
+              // 3. User buttons
               Container(
                 //dual button
                 child: Row(
