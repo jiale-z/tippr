@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:prototype_1/view/registration_page.dart';
 import './home_page.dart';
 import 'package:flutter/widgets.dart';
-import './dining_page.dart';
+import 'dining_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -15,6 +14,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -50,10 +52,11 @@ class _LoginPageState extends State<LoginPage> {
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: emailController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
-                    hintText: 'example@gmail.com'),
+                    hintText: 'Enter valid email id as abc@gmail.com'),
               ),
             ),
             Padding(
@@ -61,6 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                   left: 15.0, right: 15.0, top: 15, bottom: 0),
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -97,11 +101,7 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.20,
             ),
-            TextButton(
-                onPressed: () {
-                  register();
-                },
-                child: Text("New to Tippr? Create an Account"))
+            Text('New User? Create Account')
           ],
         ),
       ),
@@ -113,10 +113,5 @@ class _LoginPageState extends State<LoginPage> {
 
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => DiningPage()));
-  }
-
-  register() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => RegistrationPage()));
   }
 }
