@@ -14,6 +14,10 @@ class RestaurantRepPage extends StatefulWidget {
 }
 
 class _RestaurantRepPageState extends State<RestaurantRepPage> {
+  final restaurantController = TextEditingController();
+  final nameController = TextEditingController();
+  final menuController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -47,6 +51,7 @@ class _RestaurantRepPageState extends State<RestaurantRepPage> {
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: restaurantController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Restaurant Name',
@@ -65,6 +70,7 @@ class _RestaurantRepPageState extends State<RestaurantRepPage> {
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: nameController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Preferred Name',
@@ -83,6 +89,7 @@ class _RestaurantRepPageState extends State<RestaurantRepPage> {
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: menuController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Link to Menu',

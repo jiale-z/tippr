@@ -19,6 +19,7 @@ class _GuestPageState extends State<GuestPage> {
   double level = 1;
   double newLevel = 1;
   List<String> selected = [];
+  final nameController = TextEditingController();
 
   var currValue;
 
@@ -53,16 +54,27 @@ class _GuestPageState extends State<GuestPage> {
               ),
             ),
             // Name
-            Container(
-              width: MediaQuery.of(context).size.width * .85,
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8),
-                child: TextField(
-                  decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Preferred Name',
-                      hintText: 'What should we call ya:)'),
-                ),
+            // Container(
+            //   width: MediaQuery.of(context).size.width * .85,
+            //   child: const Padding(
+            //     padding: EdgeInsets.symmetric(horizontal: 8),
+            //     child: TextField(
+            //       decoration: InputDecoration(
+            //           border: OutlineInputBorder(),
+            //           labelText: 'Preferred Name',
+            //           hintText: 'What should we call ya:)'),
+            //     ),
+            //   ),
+            // ),
+            Padding(
+              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: TextField(
+                controller: nameController,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Preferred Name',
+                    hintText: 'Enter your preferred name'),
               ),
             ),
             Padding(
