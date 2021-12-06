@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import './dining_page.dart';
+import 'dining_page.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:multiselect/multiselect.dart';
+import 'temp.dart';
 
 class GuestPage extends StatefulWidget {
   @override
@@ -18,6 +20,8 @@ class _GuestPageState extends State<GuestPage> {
   double newLevel = 1;
   List<String> selected = [];
 
+  var currValue;
+
   @override
   void initState() {
     super.initState();
@@ -33,6 +37,7 @@ class _GuestPageState extends State<GuestPage> {
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
+            // Page Title
             Padding(
               padding: const EdgeInsets.only(top: 30.0),
               child: Center(
@@ -40,21 +45,24 @@ class _GuestPageState extends State<GuestPage> {
                   width: MediaQuery.of(context).size.width * 1,
                   height: MediaQuery.of(context).size.height * 0.20,
                   child: Text(
-                    'Enter User Information',
+                    'Hey there!',
                     style: TextStyle(fontSize: 50),
                     textAlign: TextAlign.center,
                   ),
                 ),
               ),
             ),
-            Padding(
-              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: TextField(
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Preferred Name',
-                    hintText: 'Enter your preferred name'),
+            // Name
+            Container(
+              width: MediaQuery.of(context).size.width * .85,
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8),
+                child: TextField(
+                  decoration: InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Preferred Name',
+                      hintText: 'What should we call ya:)'),
+                ),
               ),
             ),
             Padding(
@@ -65,9 +73,10 @@ class _GuestPageState extends State<GuestPage> {
                 ),
               ),
             ),
+            // Allergens
             Container(
               height: MediaQuery.of(context).size.height * 0.10,
-              width: MediaQuery.of(context).size.width * .75,
+              width: MediaQuery.of(context).size.width * .8,
               // child: MultiSelectDialogField(
               //   title: Text("Select User Roles"),
               //   items: _userroles
@@ -96,7 +105,7 @@ class _GuestPageState extends State<GuestPage> {
                   'Sesame'
                 ],
                 selectedValues: selected,
-                whenEmpty: 'Select the foods that you are allergic to.',
+                whenEmpty: 'Any Allergies?',
               ),
             ),
             Padding(
@@ -107,33 +116,44 @@ class _GuestPageState extends State<GuestPage> {
                 ),
               ),
             ),
+            // Slider Title
             Container(
               child: Text(
-                'Communication Level:',
+                'How much Convo?',
                 style: TextStyle(
                     color: Colors.black.withOpacity(1.00), fontSize: 18),
                 textAlign: TextAlign.center,
               ),
             ),
-            Container(
-              child: Text(
-                '1- Less Convo',
-                style: TextStyle(
-                    color: Colors.black.withOpacity(1.00), fontSize: 12),
-                textAlign: TextAlign.center,
-              ),
+            SizedBox(height: 5),
+            // Slider Labels
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                // Less Convo
+                Container(
+                  child: Text(
+                    '1 - Less',
+                    style: TextStyle(
+                        color: Colors.black.withOpacity(1.00), fontSize: 14),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                // More Convo
+                Container(
+                  child: Text(
+                    '3 - More',
+                    style: TextStyle(
+                        color: Colors.black.withOpacity(1.00), fontSize: 14),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
             ),
-            Container(
-              child: Text(
-                '5- More Convo',
-                style: TextStyle(
-                    color: Colors.black.withOpacity(1.00), fontSize: 12),
-                textAlign: TextAlign.center,
-              ),
-            ),
+            // Slider
             Container(
               height: MediaQuery.of(context).size.height * 0.10,
-              width: MediaQuery.of(context).size.width * 0.85,
+              width: MediaQuery.of(context).size.width * .85,
               child: Slider(
                 value: level,
                 min: 1,
@@ -143,8 +163,12 @@ class _GuestPageState extends State<GuestPage> {
                 onChanged: (newLevel) {
                   setState(() => level = newLevel);
                 },
+                activeColor: Colors.blueAccent,
+                thumbColor: Colors.lightBlue,
               ),
             ),
+            SizedBox(height: 30),
+            // To -> Dining Page
             Padding(
               padding: const EdgeInsets.all(15.0),
               child: Container(
@@ -176,6 +200,7 @@ class _GuestPageState extends State<GuestPage> {
   dining() {
     //call viewmodel here
 
-    Navigator.push(context, MaterialPageRoute(builder: (_) => DiningPage()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (_) => TEMPDiningPage()));
   }
 }
