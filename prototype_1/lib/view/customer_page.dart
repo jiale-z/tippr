@@ -191,6 +191,6 @@ class _CustomerPageState extends State<CustomerPage> {
     //would have to retrieve roles from aws
     //check both server and rep here
 
-    Navigator.push(context, MaterialPageRoute(builder: (_) => DiningPage()));
+    Navigator.pop(context);
   }
 }

@@ -3,11 +3,14 @@ import './home_page.dart';
 import './customer_page.dart';
 import './server_page.dart';
 import './restaurant_rep.dart';
+import './dining_page.dart';
 import 'package:multiselect/multiselect.dart';
 
 // import './confirmation_page.dart';
 import 'package:flutter/widgets.dart';
 import 'package:multi_select_flutter/multi_select_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:prototype_1/view_model/login_view_model.dart';
 
 class RegistrationPage extends StatefulWidget {
   @override
@@ -25,6 +28,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
   String? _chosenValue;
   List<String> selected = [];
 
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  final _codeController = TextEditingController();
+  final _nameController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -36,6 +44,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
+
     // List<ListItem> _userroles = [
     //   ListItem(id: 1, name: 'Customer'),
     //   ListItem(id: 2, name: 'Server'),
@@ -69,6 +78,18 @@ class _RegistrationPageState extends State<RegistrationPage> {
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: _nameController,
+                decoration: InputDecoration(
+                    border: OutlineInputBorder(),
+                    labelText: 'Name',
+                    hintText: 'Enter your name'),
+              ),
+            ),
+            Padding(
+              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
+              padding: EdgeInsets.symmetric(horizontal: 15),
+              child: TextField(
+                controller: _emailController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
@@ -80,6 +101,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   left: 15.0, right: 15.0, top: 15, bottom: 0),
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: _passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -158,6 +180,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: MaterialButton(
                 onPressed: () {
+                  registration(_emailController.text, _passwordController.text, _nameController.text);
                   showDialog(
                     context: context,
                     builder: (context) {
@@ -184,6 +207,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                       return AlertDialog(
                         title: Text('Enter Confirmation Code Sent To Email'),
                         content: TextField(
+                          controller: _codeController,
                           onChanged: (value) {},
                           decoration: InputDecoration(
                               hintText:
@@ -198,7 +222,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                               setState(() {
                                 codeDialog = valueText;
                                 Navigator.pop(context);
-                                checkCode();
+                                checkCode(_codeController.text);
                               });
                             },
                           ),
@@ -235,26 +259,38 @@ class _RegistrationPageState extends State<RegistrationPage> {
     );
   }
 
-  checkCode() {
+  checkCode(String code) async {
     //check confirmation code here
     //if good continue to registration (just put registration()),
     //else write message saying wrong code
+    bool confirmResults = await Provider.of<LoginViewModel>(context, listen: false).confirmRegistration(code);
 
-    registration();
+    if (confirmResults) {
+      role_registration();
+    }
   }
 
-  registration() {
+  registration(String email, String password, String name) async {
+    await Provider.of<LoginViewModel>(context, listen: false).register(email, password, name);
+
+  }
+
+  role_registration() {
     //call viewmodel here _selecteduserroles has data
+
+    Navigator.push(context, MaterialPageRoute(builder: (_) => DiningPage()));
 
     //need to change paths later
     if (selected.isNotEmpty) {
       if (selected.contains("Customer")) {
         Navigator.push(
             context, MaterialPageRoute(builder: (_) => CustomerPage()));
-      } else if (selected.contains("Server")) {
+      }
+      if (selected.contains("Server")) {
         Navigator.push(
             context, MaterialPageRoute(builder: (_) => ServerPage()));
-      } else if (selected.contains("Restaurant Representative")) {
+      }
+      if (selected.contains("Restaurant Representative")) {
         Navigator.push(
             context, MaterialPageRoute(builder: (_) => RestaurantRepPage()));
       }

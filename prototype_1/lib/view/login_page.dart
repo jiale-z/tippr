@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:prototype_1/view/registration_page.dart';
+import 'package:prototype_1/view_model/login_view_model.dart';
 import './home_page.dart';
 import 'package:flutter/widgets.dart';
 import './dining_page.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
+
   @override
   _LoginPageState createState() => _LoginPageState();
 
@@ -15,6 +18,8 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -23,6 +28,9 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    //final _emailController = TextEditingController();
+    //final _passwordController = TextEditingController();
+
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
@@ -50,6 +58,7 @@ class _LoginPageState extends State<LoginPage> {
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: _emailController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
@@ -61,6 +70,9 @@ class _LoginPageState extends State<LoginPage> {
                   left: 15.0, right: 15.0, top: 15, bottom: 0),
               //padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
+                controller: _passwordController,
+                onChanged: (value) {},
+                onSubmitted: (value) {},
                 obscureText: true,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
@@ -84,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: MaterialButton(
                 onPressed: () {
-                  login();
+                  login(_emailController.text, _passwordController.text);
                   // Navigator.push(
                   //     context, MaterialPageRoute(builder: (_) => HomePage()));
                 },
@@ -108,11 +120,13 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  login() {
+  login(String email, String password) async {
     //call viewmodel here
-
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => DiningPage()));
+    bool loginresults = await Provider.of<LoginViewModel>(context, listen: false).login(email, password);
+    if (loginresults) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => DiningPage()));
+    }
   }
 
   register() {

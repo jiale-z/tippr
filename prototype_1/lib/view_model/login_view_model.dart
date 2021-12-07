@@ -41,7 +41,7 @@ class LoginViewModel with ChangeNotifier {
     return _isConfirmComplete;
   }
 
-  Future<void> login(String email, String password) async {
+  Future<bool> login(String email, String password) async {
     var list = [];
     try {
       SignInResult res = await Amplify.Auth.signIn(
@@ -49,24 +49,23 @@ class LoginViewModel with ChangeNotifier {
         password: password,
       );
       _isSignedIn = res.isSignedIn;
-    } on AuthException catch (e) {
-      print(e.message);
-    }
 
-    try {
       list = await Amplify.DataStore.query(User.classType,
           where: User.EMAIL.eq(email));
-    } catch (e) {
-      print(e.toString());
+    } on AuthException catch (e) {
+      print(e.message);
+      return false;
+    }
+    if (list.isNotEmpty) {
+      _user = list[0];
+      Session().setUser(_user!);
     }
 
-    _user = list[0];
-    Session().setUser(_user!);
-
     notifyListeners();
+    return true;
   }
 
-  Future<void> register(String email, String password, String name) async {
+  Future<bool> register(String email, String password, String name) async {
     userTemp = User(email: email, name: name);
 
     try {
@@ -81,30 +80,36 @@ class LoginViewModel with ChangeNotifier {
       _isSignUpComplete = res.isSignUpComplete;
     } on AuthException catch (e) {
       print(e.message);
+      return false;
     }
     notifyListeners();
+    return true;
   }
 
-  Future<void> confirmRegistration(String confirmationCode) async {
+  Future<bool> confirmRegistration(String confirmationCode) async {
     try {
       SignUpResult res = await Amplify.Auth.confirmSignUp(
         username: userTemp!.email,
         confirmationCode: confirmationCode,
       );
       _isConfirmComplete = res.isSignUpComplete;
-      if (isConfirmComplete) {
+      print("AAAA" + _isConfirmComplete.toString());
+      if (_isConfirmComplete) {
         try {
           await Amplify.DataStore.save(userTemp!);
         } catch (e) {
-          print(e.toString());
+          print("BBBB" + e.toString());
+          return false;
         }
       }
     } on AuthException catch (e) {
       print(e.message);
+      return false;
     }
 
     Session().setUser(userTemp!);
 
     notifyListeners();
+    return true;
   }
 }

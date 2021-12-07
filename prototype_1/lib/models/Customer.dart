@@ -13,16 +13,14 @@
 * permissions and limitations under the License.
 */
 
-// NOTE: This file is generated and may not follow lint rules defined in your app
-// Generated files can be excluded from analysis in analysis_options.yaml
-// For more info, see: https://dart.dev/guides/language/analysis-options#excluding-code-from-analysis
-
-// ignore_for_file: public_member_api_docs, file_names, unnecessary_new, prefer_if_null_operators, prefer_const_constructors, slash_for_doc_comments, annotate_overrides, non_constant_identifier_names, unnecessary_string_interpolations, prefer_adjacent_string_concatenation, unnecessary_const, dead_code
+// ignore_for_file: public_member_api_docs
 
 import 'ModelProvider.dart';
 import 'package:amplify_datastore_plugin_interface/amplify_datastore_plugin_interface.dart';
 import 'package:flutter/foundation.dart';
-import 'Allergens.dart';
+import "Allergens.dart";
+
+
 
 /** This is an auto generated class representing the Customer type in your schema. */
 @immutable
@@ -36,186 +34,152 @@ class Customer extends Model {
 
   @override
   getInstanceType() => classType;
-
+  
   @override
   String getId() {
     return id;
   }
-
+  
   int? get communicationPreference {
     return _communicationPreference;
   }
-
+  
   Allergens? get allergens {
     return _allergens;
   }
-
+  
   String? get restaurantID {
     return _restaurantID;
   }
-
+  
   User get user {
     try {
       return _user!;
-    } catch (e) {
-      throw new DataStoreException(
-          DataStoreExceptionMessages
-              .codeGenRequiredFieldForceCastExceptionMessage,
-          recoverySuggestion: DataStoreExceptionMessages
-              .codeGenRequiredFieldForceCastRecoverySuggestion,
-          underlyingException: e.toString());
+    } catch(e) {
+      throw new DataStoreException(DataStoreExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage, recoverySuggestion: DataStoreExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion, underlyingException: e.toString());
     }
   }
-
-  const Customer._internal(
-      {required this.id,
-      communicationPreference,
-      allergens,
-      restaurantID,
-      required user})
-      : _communicationPreference = communicationPreference,
-        _allergens = allergens,
-        _restaurantID = restaurantID,
-        _user = user;
-
-  factory Customer(
-      {String? id,
-      int? communicationPreference,
-      Allergens? allergens,
-      String? restaurantID,
-      required User user}) {
+  
+  const Customer._internal({required this.id, communicationPreference, allergens, restaurantID, required user}): _communicationPreference = communicationPreference, _allergens = allergens, _restaurantID = restaurantID, _user = user;
+  
+  factory Customer({String? id, int? communicationPreference, Allergens? allergens, String? restaurantID, required User user}) {
     return Customer._internal(
-        id: id == null ? UUID.getUUID() : id,
-        communicationPreference: communicationPreference,
-        allergens: allergens,
-        restaurantID: restaurantID,
-        user: user);
+      id: id == null ? UUID.getUUID() : id,
+      communicationPreference: communicationPreference,
+      allergens: allergens,
+      restaurantID: restaurantID,
+      user: user);
   }
-
+  
   bool equals(Object other) {
     return this == other;
   }
-
+  
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
     return other is Customer &&
-        id == other.id &&
-        _communicationPreference == other._communicationPreference &&
-        _allergens == other._allergens &&
-        _restaurantID == other._restaurantID &&
-        _user == other._user;
+      id == other.id &&
+      _communicationPreference == other._communicationPreference &&
+      _allergens == other._allergens &&
+      _restaurantID == other._restaurantID &&
+      _user == other._user;
   }
-
+  
   @override
   int get hashCode => toString().hashCode;
-
+  
   @override
   String toString() {
     var buffer = new StringBuffer();
-
+    
     buffer.write("Customer {");
     buffer.write("id=" + "$id" + ", ");
-    buffer.write("communicationPreference=" +
-        (_communicationPreference != null
-            ? _communicationPreference!.toString()
-            : "null") +
-        ", ");
-    buffer.write("allergens=" +
-        (_allergens != null ? _allergens!.toString() : "null") +
-        ", ");
+    buffer.write("communicationPreference=" + (_communicationPreference != null ? _communicationPreference!.toString() : "null") + ", ");
+    buffer.write("allergens=" + (_allergens != null ? _allergens!.toString() : "null") + ", ");
     buffer.write("restaurantID=" + "$_restaurantID" + ", ");
     buffer.write("user=" + (_user != null ? _user!.toString() : "null"));
     buffer.write("}");
-
+    
     return buffer.toString();
   }
-
-  Customer copyWith(
-      {String? id,
-      int? communicationPreference,
-      Allergens? allergens,
-      String? restaurantID,
-      User? user}) {
+  
+  Customer copyWith({String? id, int? communicationPreference, Allergens? allergens, String? restaurantID, User? user}) {
     return Customer(
-        id: id ?? this.id,
-        communicationPreference:
-            communicationPreference ?? this.communicationPreference,
-        allergens: allergens ?? this.allergens,
-        restaurantID: restaurantID ?? this.restaurantID,
-        user: user ?? this.user);
+      id: id ?? this.id,
+      communicationPreference: communicationPreference ?? this.communicationPreference,
+      allergens: allergens ?? this.allergens,
+      restaurantID: restaurantID ?? this.restaurantID,
+      user: user ?? this.user);
   }
-
-  Customer.fromJson(Map<String, dynamic> json)
-      : id = json['id'],
-        _communicationPreference =
-            (json['communicationPreference'] as num?)?.toInt(),
-        _allergens = json['allergens'],
-        _restaurantID = json['restaurantID'],
-        _user = json['user']?['serializedData'] != null
-            ? User.fromJson(
-                new Map<String, dynamic>.from(json['user']['serializedData']))
-            : null;
-
+  
+  Customer.fromJson(Map<String, dynamic> json)  
+    : id = json['id'],
+      _communicationPreference = json['communicationPreference'],
+      _allergens = json['allergens'],
+      _restaurantID = json['restaurantID'],
+      _user = json['user']?['serializedData'] != null
+        ? User.fromJson(new Map<String, dynamic>.from(json['user']['serializedData']))
+        : null;
+  
   Map<String, dynamic> toJson() => {
-        'id': id,
-        'communicationPreference': _communicationPreference,
-        'allergens': _allergens,
-        'restaurantID': _restaurantID,
-        'user': _user?.toJson()
-      };
+    'id': id, 'communicationPreference': _communicationPreference, 'allergens': _allergens, 'restaurantID': _restaurantID, 'user': _user?.toJson()
+  };
 
   static final QueryField ID = QueryField(fieldName: "customer.id");
-  static final QueryField COMMUNICATIONPREFERENCE =
-      QueryField(fieldName: "communicationPreference");
+  static final QueryField COMMUNICATIONPREFERENCE = QueryField(fieldName: "communicationPreference");
   static final QueryField ALLERGENS = QueryField(fieldName: "allergens");
   static final QueryField RESTAURANTID = QueryField(fieldName: "restaurantID");
   static final QueryField USER = QueryField(
-      fieldName: "user",
-      fieldType: ModelFieldType(ModelFieldTypeEnum.model,
-          ofModelName: (User).toString()));
-  static var schema =
-      Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
+    fieldName: "user",
+    fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (User).toString()));
+  static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Customer";
     modelSchemaDefinition.pluralName = "Customers";
-
+    
     modelSchemaDefinition.authRules = [
-      AuthRule(authStrategy: AuthStrategy.PUBLIC, operations: [
-        ModelOperation.CREATE,
-        ModelOperation.UPDATE,
-        ModelOperation.DELETE,
-        ModelOperation.READ
-      ])
+      AuthRule(
+        authStrategy: AuthStrategy.PUBLIC,
+        operations: [
+          ModelOperation.CREATE,
+          ModelOperation.UPDATE,
+          ModelOperation.DELETE,
+          ModelOperation.READ
+        ])
     ];
-
+    
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
-
+    
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-        key: Customer.COMMUNICATIONPREFERENCE,
-        isRequired: false,
-        ofType: ModelFieldType(ModelFieldTypeEnum.int)));
-
+      key: Customer.COMMUNICATIONPREFERENCE,
+      isRequired: false,
+      ofType: ModelFieldType(ModelFieldTypeEnum.int)
+    ));
+    
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-        key: Customer.ALLERGENS,
-        isRequired: false,
-        ofType: ModelFieldType(ModelFieldTypeEnum.string)));
-
+      key: Customer.ALLERGENS,
+      isRequired: false,
+      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+    ));
+    
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
-        key: Customer.RESTAURANTID,
-        isRequired: false,
-        ofType: ModelFieldType(ModelFieldTypeEnum.string)));
-
+      key: Customer.RESTAURANTID,
+      isRequired: false,
+      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+    ));
+    
     modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
-        key: Customer.USER,
-        isRequired: true,
-        targetName: "customerUserId",
-        ofModelName: (User).toString()));
+      key: Customer.USER,
+      isRequired: true,
+      targetName: "customerUserId",
+      ofModelName: (User).toString()
+    ));
   });
 }
 
 class _CustomerModelType extends ModelType<Customer> {
   const _CustomerModelType();
-
+  
   @override
   Customer fromJson(Map<String, dynamic> jsonData) {
     return Customer.fromJson(jsonData);
