@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:prototype_1/models/User.dart';
 import 'package:flutter/cupertino.dart';
@@ -49,7 +51,17 @@ class RoleRegViewModel with ChangeNotifier {
   Future<void> registerCustomer(int comLevel, List<bool> allergens) async {
     Customer cust = Customer(
         communicationPreference: comLevel,
-        allergens: Allergens(allergens),
+        allergens: jsonEncode({
+          "milk": allergens[0],
+          "eggs": allergens[1],
+          "fish": allergens[2],
+          "shellfish": allergens[3],
+          "treeNuts": allergens[4],
+          "peanuts": allergens[5],
+          "wheat": allergens[6],
+          "soy": allergens[7],
+          "sesame": allergens[8],
+        }),
         user: _user!);
 
     try {
@@ -64,7 +76,6 @@ class RoleRegViewModel with ChangeNotifier {
 
   Future<void> registerServer(
       String restCode, String? bio, String? imageLink) async {
-    ServerBio serverBio = ServerBio(bio, imageLink);
     String restID;
 
     try {
@@ -75,8 +86,8 @@ class RoleRegViewModel with ChangeNotifier {
         _ServerRegError = true;
       } else {
         restID = list[0].id;
-        Server server =
-            Server(user: _user!, restaurantID: restID, bio: serverBio);
+        Server server = Server(
+            user: _user!, restaurantID: restID, bio: bio, picture: imageLink);
         await Amplify.DataStore.save(server);
         _isServerRegComplete = true;
       }
