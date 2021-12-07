@@ -18,8 +18,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -62,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
-                    hintText: 'example@gmail.com'),
+                    hintText: 'Enter valid email id as abc@gmail.com'),
               ),
             ),
             Padding(
@@ -109,11 +111,7 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.20,
             ),
-            TextButton(
-                onPressed: () {
-                  register();
-                },
-                child: Text("New to Tippr? Create an Account"))
+            Text('New User? Create Account')
           ],
         ),
       ),
@@ -127,10 +125,5 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => DiningPage()));
     }
-  }
-
-  register() {
-    Navigator.push(
-        context, MaterialPageRoute(builder: (context) => RegistrationPage()));
   }
 }

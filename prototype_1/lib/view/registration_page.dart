@@ -27,6 +27,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
   String _selectedrole = "Customer";
   String? _chosenValue;
   List<String> selected = [];
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final confirmationController = TextEditingController();
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
