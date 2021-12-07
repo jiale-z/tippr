@@ -27,9 +27,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
   String _selectedrole = "Customer";
   String? _chosenValue;
   List<String> selected = [];
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final confirmationController = TextEditingController();
 
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -274,6 +271,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   registration(String email, String password, String name) async {
+    print(email);
     await Provider.of<LoginViewModel>(context, listen: false).register(email, password, name);
 
   }

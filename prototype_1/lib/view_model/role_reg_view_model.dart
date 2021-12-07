@@ -48,20 +48,11 @@ class RoleRegViewModel with ChangeNotifier {
   // called once customer survey is complete, with comm level and allergens list
   // Allergens list is an array (size 9) of booleans with EXACT order as follows
   // [milk, eggs, fish, shellfish, treeNuts, peanuts, wheat, soy, sesame]
-  Future<void> registerCustomer(int comLevel, List<bool> allergens) async {
+  Future<void> registerCustomer(int comLevel, List<String> allergens) async {
+    var list = toBoolList(allergens);
     Customer cust = Customer(
         communicationPreference: comLevel,
-        allergens: jsonEncode({
-          "milk": allergens[0],
-          "eggs": allergens[1],
-          "fish": allergens[2],
-          "shellfish": allergens[3],
-          "treeNuts": allergens[4],
-          "peanuts": allergens[5],
-          "wheat": allergens[6],
-          "soy": allergens[7],
-          "sesame": allergens[8],
-        }),
+        allergens: list,
         user: _user!);
 
     try {
@@ -72,6 +63,62 @@ class RoleRegViewModel with ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  List<bool> toBoolList (List<String> list) {
+    List<bool> returnList = [];
+    if (list.contains('Milk')) {
+      returnList.add(true);
+    } else {
+      returnList.add(false);
+    }
+    if (list.contains('Eggs')) {
+      returnList.add(true);
+    } else {
+      returnList.add(false);
+    }
+    if (list.contains('Fish')) {
+      returnList.add(true);
+    } else {
+      returnList.add(false);
+    }
+    if (list.contains('Shellfish')) {
+      returnList.add(true);
+    } else {
+      returnList.add(false);
+    }
+    if (list.contains('Tree Nuts')) {
+      returnList.add(true);
+    } else {
+      returnList.add(false);
+    }
+    if (list.contains('Peanuts')) {
+      returnList.add(true);
+    } else {
+      returnList.add(false);
+    }
+    if (list.contains('Wheat')) {
+      returnList.add(true);
+    } else {
+      returnList.add(false);
+    }
+    if (list.contains('Soy')) {
+      returnList.add(true);
+    } else {
+      returnList.add(false);
+    }
+    if (list.contains('Sesame')) {
+      returnList.add(true);
+    } else {
+      returnList.add(false);
+    }
+    if (list.contains('Other')) {
+      returnList.add(true);
+    } else {
+      returnList.add(false);
+    }
+
+    return returnList;
   }
 
   Future<void> registerServer(

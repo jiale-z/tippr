@@ -1,3 +1,5 @@
+//import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:prototype_1/view/registration_page.dart';
 import 'package:prototype_1/view_model/login_view_model.dart';
@@ -25,7 +27,17 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
+
+    //dummyFunc(context);
     // Provider.of<HomeViewModel>(context, listen: false).fetchUserData();
+  }
+
+  Future<void> dummyFunc(context) async {
+    var ans = await Provider.of<LoginViewModel>(context).getCurrUser();
+    if (ans) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => DiningPage()));
+    }
   }
 
   @override
@@ -37,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text("Login Page"),
-        automaticallyImplyLeading: true,
+        automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -111,7 +123,11 @@ class _LoginPageState extends State<LoginPage> {
             SizedBox(
               height: MediaQuery.of(context).size.height * 0.20,
             ),
-            Text('New User? Create Account')
+            TextButton(
+                onPressed: () {
+                  register();
+                },
+                child: Text("New to Tippr? Create an Account"))
           ],
         ),
       ),
@@ -125,5 +141,10 @@ class _LoginPageState extends State<LoginPage> {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => DiningPage()));
     }
+  }
+
+  register() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => RegistrationPage()));
   }
 }

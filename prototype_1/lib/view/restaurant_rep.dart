@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import './home_page.dart';
 import 'dart:async';
 import 'dart:io';
+import 'package:prototype_1/view_model/role_reg_view_model.dart';
+import 'package:provider/provider.dart';
 
 class RestaurantRepPage extends StatefulWidget {
   @override
@@ -14,9 +16,8 @@ class RestaurantRepPage extends StatefulWidget {
 }
 
 class _RestaurantRepPageState extends State<RestaurantRepPage> {
-  final restaurantController = TextEditingController();
-  final nameController = TextEditingController();
-  final menuController = TextEditingController();
+  final _restaurantController = TextEditingController();
+  final _menuController = TextEditingController();
 
   @override
   void initState() {
@@ -51,7 +52,7 @@ class _RestaurantRepPageState extends State<RestaurantRepPage> {
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
-                controller: restaurantController,
+                controller: _restaurantController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Restaurant Name',
@@ -67,17 +68,6 @@ class _RestaurantRepPageState extends State<RestaurantRepPage> {
               ),
             ),
             Padding(
-              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: TextField(
-                controller: nameController,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Preferred Name',
-                    hintText: 'Enter your preferred name'),
-              ),
-            ),
-            Padding(
               padding: const EdgeInsets.all(0.0),
               child: Center(
                 child: Container(
@@ -89,7 +79,7 @@ class _RestaurantRepPageState extends State<RestaurantRepPage> {
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
-                controller: menuController,
+                controller: _menuController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Link to Menu',
@@ -135,8 +125,10 @@ class _RestaurantRepPageState extends State<RestaurantRepPage> {
   continue_home_page() {
     //call viewmodel here to save link
 
+    Provider.of<RoleRegViewModel>(context, listen: false).registerRestaurant(_restaurantController.text, _menuController.text);
+
     //dont need to check for next page here
 
-    Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage()));
+    Navigator.pop(context);
   }
 }

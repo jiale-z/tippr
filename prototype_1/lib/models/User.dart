@@ -39,25 +39,17 @@ class User extends Model {
     return id;
   }
   
-  String get name {
-    try {
-      return _name!;
-    } catch(e) {
-      throw new DataStoreException(DataStoreExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage, recoverySuggestion: DataStoreExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion, underlyingException: e.toString());
-    }
+  String? get name {
+    return _name;
   }
   
-  String get email {
-    try {
-      return _email!;
-    } catch(e) {
-      throw new DataStoreException(DataStoreExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage, recoverySuggestion: DataStoreExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion, underlyingException: e.toString());
-    }
+  String? get email {
+    return _email;
   }
   
-  const User._internal({required this.id, required name, required email}): _name = name, _email = email;
+  const User._internal({required this.id, name, email}): _name = name, _email = email;
   
-  factory User({String? id, required String name, required String email}) {
+  factory User({String? id, String? name, String? email}) {
     return User._internal(
       id: id == null ? UUID.getUUID() : id,
       name: name,
@@ -131,13 +123,13 @@ class User extends Model {
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: User.NAME,
-      isRequired: true,
+      isRequired: false,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: User.EMAIL,
-      isRequired: true,
+      isRequired: false,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
   });

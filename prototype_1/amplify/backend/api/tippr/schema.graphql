@@ -1,10 +1,17 @@
+type Customer @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  allergens: [Boolean]
+  communicationPreference: Int
+  user: User! @connection
+}
+
 type Restaurant @model @auth(rules: [{allow: public}]) {
   id: ID!
+  restaurantCode: String!
   menu: String
+  title: String!
   user: User! @connection
   servers: [Server] @connection(keyName: "byRestaurant", fields: ["id"])
-  title: String
-  restaurantCode: String
 }
 
 type Server @model @auth(rules: [{allow: public}]) @key(name: "byRestaurant", fields: ["restaurantID"]) {
@@ -15,17 +22,9 @@ type Server @model @auth(rules: [{allow: public}]) @key(name: "byRestaurant", fi
   picture: String
 }
 
-type Customer @model @auth(rules: [{allow: public}]) @key(name: "byRestaurant", fields: ["restaurantID"]) {
-  id: ID!
-  communicationPreference: Int
-  allergens: AWSJSON
-  restaurantID: ID
-  user: User! @connection
-}
-
 type User @model @auth(rules: [{allow: public}]) {
   id: ID!
-  name: String!
-  email: String!
+  name: String
+  email: String
 }
  

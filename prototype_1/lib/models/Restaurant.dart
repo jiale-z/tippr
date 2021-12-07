@@ -30,11 +30,11 @@ import 'package:flutter/foundation.dart';
 class Restaurant extends Model {
   static const classType = const _RestaurantModelType();
   final String id;
+  final String? _restaurantCode;
   final String? _menu;
+  final String? _title;
   final User? _user;
   final List<Server>? _servers;
-  final String? _title;
-  final String? _restaurantCode;
 
   @override
   getInstanceType() => classType;
@@ -44,8 +44,24 @@ class Restaurant extends Model {
     return id;
   }
   
+  String get restaurantCode {
+    try {
+      return _restaurantCode!;
+    } catch(e) {
+      throw new DataStoreException(DataStoreExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage, recoverySuggestion: DataStoreExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion, underlyingException: e.toString());
+    }
+  }
+  
   String? get menu {
     return _menu;
+  }
+  
+  String get title {
+    try {
+      return _title!;
+    } catch(e) {
+      throw new DataStoreException(DataStoreExceptionMessages.codeGenRequiredFieldForceCastExceptionMessage, recoverySuggestion: DataStoreExceptionMessages.codeGenRequiredFieldForceCastRecoverySuggestion, underlyingException: e.toString());
+    }
   }
   
   User get user {
@@ -60,24 +76,16 @@ class Restaurant extends Model {
     return _servers;
   }
   
-  String? get title {
-    return _title;
-  }
+  const Restaurant._internal({required this.id, required restaurantCode, menu, required title, required user, servers}): _restaurantCode = restaurantCode, _menu = menu, _title = title, _user = user, _servers = servers;
   
-  String? get restaurantCode {
-    return _restaurantCode;
-  }
-  
-  const Restaurant._internal({required this.id, menu, required user, servers, title, restaurantCode}): _menu = menu, _user = user, _servers = servers, _title = title, _restaurantCode = restaurantCode;
-  
-  factory Restaurant({String? id, String? menu, required User user, List<Server>? servers, String? title, String? restaurantCode}) {
+  factory Restaurant({String? id, required String restaurantCode, String? menu, required String title, required User user, List<Server>? servers}) {
     return Restaurant._internal(
       id: id == null ? UUID.getUUID() : id,
+      restaurantCode: restaurantCode,
       menu: menu,
-      user: user,
-      servers: servers != null ? List<Server>.unmodifiable(servers) : servers,
       title: title,
-      restaurantCode: restaurantCode);
+      user: user,
+      servers: servers != null ? List<Server>.unmodifiable(servers) : servers);
   }
   
   bool equals(Object other) {
@@ -89,11 +97,11 @@ class Restaurant extends Model {
     if (identical(other, this)) return true;
     return other is Restaurant &&
       id == other.id &&
+      _restaurantCode == other._restaurantCode &&
       _menu == other._menu &&
-      _user == other._user &&
-      DeepCollectionEquality().equals(_servers, other._servers) &&
       _title == other._title &&
-      _restaurantCode == other._restaurantCode;
+      _user == other._user &&
+      DeepCollectionEquality().equals(_servers, other._servers);
   }
   
   @override
@@ -105,28 +113,30 @@ class Restaurant extends Model {
     
     buffer.write("Restaurant {");
     buffer.write("id=" + "$id" + ", ");
+    buffer.write("restaurantCode=" + "$_restaurantCode" + ", ");
     buffer.write("menu=" + "$_menu" + ", ");
-    buffer.write("user=" + (_user != null ? _user!.toString() : "null") + ", ");
     buffer.write("title=" + "$_title" + ", ");
-    buffer.write("restaurantCode=" + "$_restaurantCode");
+    buffer.write("user=" + (_user != null ? _user!.toString() : "null"));
     buffer.write("}");
     
     return buffer.toString();
   }
   
-  Restaurant copyWith({String? id, String? menu, User? user, List<Server>? servers, String? title, String? restaurantCode}) {
+  Restaurant copyWith({String? id, String? restaurantCode, String? menu, String? title, User? user, List<Server>? servers}) {
     return Restaurant(
       id: id ?? this.id,
+      restaurantCode: restaurantCode ?? this.restaurantCode,
       menu: menu ?? this.menu,
-      user: user ?? this.user,
-      servers: servers ?? this.servers,
       title: title ?? this.title,
-      restaurantCode: restaurantCode ?? this.restaurantCode);
+      user: user ?? this.user,
+      servers: servers ?? this.servers);
   }
   
   Restaurant.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
+      _restaurantCode = json['restaurantCode'],
       _menu = json['menu'],
+      _title = json['title'],
       _user = json['user']?['serializedData'] != null
         ? User.fromJson(new Map<String, dynamic>.from(json['user']['serializedData']))
         : null,
@@ -135,24 +145,22 @@ class Restaurant extends Model {
           .where((e) => e?['serializedData'] != null)
           .map((e) => Server.fromJson(new Map<String, dynamic>.from(e['serializedData'])))
           .toList()
-        : null,
-      _title = json['title'],
-      _restaurantCode = json['restaurantCode'];
+        : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'menu': _menu, 'user': _user?.toJson(), 'servers': _servers?.map((Server? e) => e?.toJson()).toList(), 'title': _title, 'restaurantCode': _restaurantCode
+    'id': id, 'restaurantCode': _restaurantCode, 'menu': _menu, 'title': _title, 'user': _user?.toJson(), 'servers': _servers?.map((Server? e) => e?.toJson()).toList()
   };
 
   static final QueryField ID = QueryField(fieldName: "restaurant.id");
+  static final QueryField RESTAURANTCODE = QueryField(fieldName: "restaurantCode");
   static final QueryField MENU = QueryField(fieldName: "menu");
+  static final QueryField TITLE = QueryField(fieldName: "title");
   static final QueryField USER = QueryField(
     fieldName: "user",
     fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (User).toString()));
   static final QueryField SERVERS = QueryField(
     fieldName: "servers",
     fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (Server).toString()));
-  static final QueryField TITLE = QueryField(fieldName: "title");
-  static final QueryField RESTAURANTCODE = QueryField(fieldName: "restaurantCode");
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Restaurant";
     modelSchemaDefinition.pluralName = "Restaurants";
@@ -171,8 +179,20 @@ class Restaurant extends Model {
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
+      key: Restaurant.RESTAURANTCODE,
+      isRequired: true,
+      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: Restaurant.MENU,
       isRequired: false,
+      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
+      key: Restaurant.TITLE,
+      isRequired: true,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
     
@@ -188,18 +208,6 @@ class Restaurant extends Model {
       isRequired: false,
       ofModelName: (Server).toString(),
       associatedKey: Server.RESTAURANTID
-    ));
-    
-    modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Restaurant.TITLE,
-      isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
-    
-    modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Restaurant.RESTAURANTCODE,
-      isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
   });
 }

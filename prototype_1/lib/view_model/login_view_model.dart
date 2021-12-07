@@ -44,6 +44,12 @@ class LoginViewModel with ChangeNotifier {
   Future<bool> login(String email, String password) async {
     var list = [];
     try {
+      await Amplify.Auth.signOut();
+    }
+    catch (e) {
+      print(e.toString());
+    }
+    try {
       SignInResult res = await Amplify.Auth.signIn(
         username: email,
         password: password,
@@ -89,16 +95,14 @@ class LoginViewModel with ChangeNotifier {
   Future<bool> confirmRegistration(String confirmationCode) async {
     try {
       SignUpResult res = await Amplify.Auth.confirmSignUp(
-        username: userTemp!.email,
+        username: userTemp!.email!,
         confirmationCode: confirmationCode,
       );
       _isConfirmComplete = res.isSignUpComplete;
-      print("AAAA" + _isConfirmComplete.toString());
       if (_isConfirmComplete) {
         try {
           await Amplify.DataStore.save(userTemp!);
         } catch (e) {
-          print("BBBB" + e.toString());
           return false;
         }
       }
@@ -110,6 +114,21 @@ class LoginViewModel with ChangeNotifier {
     Session().setUser(userTemp!);
 
     notifyListeners();
+    return true;
+  }
+
+  Future<bool> getCurrUser() async {
+    var temp;
+    try {
+      temp = await Amplify.Auth.getCurrentUser();
+      print("AAA"+ temp);
+    }
+    catch (e) {
+      print("BBB" + e.toString());
+    }
+    if (temp == null) {
+      return false;
+    }
     return true;
   }
 }

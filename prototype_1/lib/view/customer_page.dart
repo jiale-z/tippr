@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import './home_page.dart';
 import './dining_page.dart';
 import 'package:multiselect/multiselect.dart';
+import 'package:prototype_1/view_model/role_reg_view_model.dart';
+import 'package:provider/provider.dart';
 
 class CustomerPage extends StatefulWidget {
   @override
@@ -47,17 +49,6 @@ class _CustomerPageState extends State<CustomerPage> {
                     textAlign: TextAlign.center,
                   ),
                 ),
-              ),
-            ),
-            Padding(
-              //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
-              padding: EdgeInsets.symmetric(horizontal: 15),
-              child: TextField(
-                controller: nameController,
-                decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Preferred Name',
-                    hintText: 'Enter your preferred name'),
               ),
             ),
             Padding(
@@ -121,7 +112,7 @@ class _CustomerPageState extends State<CustomerPage> {
             ),
             Container(
               child: Text(
-                '1- Less Convo',
+                '1- Quiet',
                 style: TextStyle(
                     color: Colors.black.withOpacity(1.00), fontSize: 12),
                 textAlign: TextAlign.center,
@@ -129,7 +120,7 @@ class _CustomerPageState extends State<CustomerPage> {
             ),
             Container(
               child: Text(
-                '5- More Convo',
+                '3- Talkative',
                 style: TextStyle(
                     color: Colors.black.withOpacity(1.00), fontSize: 12),
                 textAlign: TextAlign.center,
@@ -187,6 +178,8 @@ class _CustomerPageState extends State<CustomerPage> {
 
   login() {
     //call viewmodel here
+
+    Provider.of<RoleRegViewModel>(context, listen: false).registerCustomer(level.toInt(), selected);
 
     //would need to check roles on each page (customer, server, and rest rep)
     //to determine what the next page should be

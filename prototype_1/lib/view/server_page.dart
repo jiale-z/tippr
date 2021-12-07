@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import './home_page.dart';
 import './image_uploader.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:prototype_1/view_model/role_reg_view_model.dart';
+import 'package:provider/provider.dart';
 
 class ServerPage extends StatefulWidget {
   @override
@@ -14,8 +16,8 @@ class ServerPage extends StatefulWidget {
 }
 
 class _ServerPageState extends State<ServerPage> {
-  final nameController = TextEditingController();
-  final bioController = TextEditingController();
+  final _codeController = TextEditingController();
+  final _bioController = TextEditingController();
 
   @override
   void initState() {
@@ -47,14 +49,23 @@ class _ServerPageState extends State<ServerPage> {
               ),
             ),
             Padding(
+              padding: const EdgeInsets.all(0.0),
+              child: Center(
+                child: Container(
+                  height: MediaQuery.of(context).size.height * 0.025,
+                ),
+              ),
+            ),
+            Padding(
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
-                controller: nameController,
+                controller: _codeController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
-                    labelText: 'Preferred Name',
-                    hintText: 'Enter your preferred name'),
+                    labelText: 'Restaurant Code',
+                    hintText: 'Enter your restaurant code',
+                ),
               ),
             ),
             Padding(
@@ -69,7 +80,7 @@ class _ServerPageState extends State<ServerPage> {
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
-                controller: bioController,
+                controller: _bioController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Server Bio',
@@ -116,8 +127,8 @@ class _ServerPageState extends State<ServerPage> {
     //call viewmodel here
 
     //look at customer_page, check for rep here
+    Provider.of<RoleRegViewModel>(context, listen: false).registerServer(_codeController.text, _bioController.text, null);
 
-    Navigator.push(
-        context, MaterialPageRoute(builder: (_) => ServerPageCopy()));
+    Navigator.pop(context);
   }
 }

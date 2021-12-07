@@ -22,6 +22,6 @@
       }
     },
     "apiName": "tippr",
-    "gqlSchemaPath": "/tmp/amplify-5166cecd-c171-41d8-bd7b-da2043849f0d/amplify/backend/api/tippr/schema.graphql"
+    "gqlSchemaPath": "/tmp/amplify-f7d41aee-b134-4544-b412-5e3655f6e20e/amplify/backend/api/tippr/schema.graphql"
   }
 }

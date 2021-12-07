@@ -21,6 +21,7 @@
 
 import 'ModelProvider.dart';
 import 'package:amplify_datastore_plugin_interface/amplify_datastore_plugin_interface.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/foundation.dart';
 
 
@@ -29,9 +30,8 @@ import 'package:flutter/foundation.dart';
 class Customer extends Model {
   static const classType = const _CustomerModelType();
   final String id;
+  final List<bool>? _allergens;
   final int? _communicationPreference;
-  final String? _allergens;
-  final String? _restaurantID;
   final User? _user;
 
   @override
@@ -42,16 +42,12 @@ class Customer extends Model {
     return id;
   }
   
-  int? get communicationPreference {
-    return _communicationPreference;
-  }
-  
-  String? get allergens {
+  List<bool>? get allergens {
     return _allergens;
   }
   
-  String? get restaurantID {
-    return _restaurantID;
+  int? get communicationPreference {
+    return _communicationPreference;
   }
   
   User get user {
@@ -62,14 +58,13 @@ class Customer extends Model {
     }
   }
   
-  const Customer._internal({required this.id, communicationPreference, allergens, restaurantID, required user}): _communicationPreference = communicationPreference, _allergens = allergens, _restaurantID = restaurantID, _user = user;
+  const Customer._internal({required this.id, allergens, communicationPreference, required user}): _allergens = allergens, _communicationPreference = communicationPreference, _user = user;
   
-  factory Customer({String? id, int? communicationPreference, String? allergens, String? restaurantID, required User user}) {
+  factory Customer({String? id, List<bool>? allergens, int? communicationPreference, required User user}) {
     return Customer._internal(
       id: id == null ? UUID.getUUID() : id,
+      allergens: allergens != null ? List<bool>.unmodifiable(allergens) : allergens,
       communicationPreference: communicationPreference,
-      allergens: allergens,
-      restaurantID: restaurantID,
       user: user);
   }
   
@@ -82,9 +77,8 @@ class Customer extends Model {
     if (identical(other, this)) return true;
     return other is Customer &&
       id == other.id &&
+      DeepCollectionEquality().equals(_allergens, other._allergens) &&
       _communicationPreference == other._communicationPreference &&
-      _allergens == other._allergens &&
-      _restaurantID == other._restaurantID &&
       _user == other._user;
   }
   
@@ -97,41 +91,37 @@ class Customer extends Model {
     
     buffer.write("Customer {");
     buffer.write("id=" + "$id" + ", ");
+    buffer.write("allergens=" + (_allergens != null ? _allergens!.toString() : "null") + ", ");
     buffer.write("communicationPreference=" + (_communicationPreference != null ? _communicationPreference!.toString() : "null") + ", ");
-    buffer.write("allergens=" + "$_allergens" + ", ");
-    buffer.write("restaurantID=" + "$_restaurantID" + ", ");
     buffer.write("user=" + (_user != null ? _user!.toString() : "null"));
     buffer.write("}");
     
     return buffer.toString();
   }
   
-  Customer copyWith({String? id, int? communicationPreference, String? allergens, String? restaurantID, User? user}) {
+  Customer copyWith({String? id, List<bool>? allergens, int? communicationPreference, User? user}) {
     return Customer(
       id: id ?? this.id,
-      communicationPreference: communicationPreference ?? this.communicationPreference,
       allergens: allergens ?? this.allergens,
-      restaurantID: restaurantID ?? this.restaurantID,
+      communicationPreference: communicationPreference ?? this.communicationPreference,
       user: user ?? this.user);
   }
   
   Customer.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
+      _allergens = json['allergens']?.cast<bool>(),
       _communicationPreference = (json['communicationPreference'] as num?)?.toInt(),
-      _allergens = json['allergens'],
-      _restaurantID = json['restaurantID'],
       _user = json['user']?['serializedData'] != null
         ? User.fromJson(new Map<String, dynamic>.from(json['user']['serializedData']))
         : null;
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'communicationPreference': _communicationPreference, 'allergens': _allergens, 'restaurantID': _restaurantID, 'user': _user?.toJson()
+    'id': id, 'allergens': _allergens, 'communicationPreference': _communicationPreference, 'user': _user?.toJson()
   };
 
   static final QueryField ID = QueryField(fieldName: "customer.id");
-  static final QueryField COMMUNICATIONPREFERENCE = QueryField(fieldName: "communicationPreference");
   static final QueryField ALLERGENS = QueryField(fieldName: "allergens");
-  static final QueryField RESTAURANTID = QueryField(fieldName: "restaurantID");
+  static final QueryField COMMUNICATIONPREFERENCE = QueryField(fieldName: "communicationPreference");
   static final QueryField USER = QueryField(
     fieldName: "user",
     fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (User).toString()));
@@ -153,21 +143,16 @@ class Customer extends Model {
     modelSchemaDefinition.addField(ModelFieldDefinition.id());
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
+      key: Customer.ALLERGENS,
+      isRequired: false,
+      isArray: true,
+      ofType: ModelFieldType(ModelFieldTypeEnum.collection, ofModelName: describeEnum(ModelFieldTypeEnum.bool))
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: Customer.COMMUNICATIONPREFERENCE,
       isRequired: false,
       ofType: ModelFieldType(ModelFieldTypeEnum.int)
-    ));
-    
-    modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Customer.ALLERGENS,
-      isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
-    ));
-    
-    modelSchemaDefinition.addField(ModelFieldDefinition.field(
-      key: Customer.RESTAURANTID,
-      isRequired: false,
-      ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
     
     modelSchemaDefinition.addField(ModelFieldDefinition.belongsTo(
