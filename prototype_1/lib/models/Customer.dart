@@ -13,13 +13,15 @@
 * permissions and limitations under the License.
 */
 
-// ignore_for_file: public_member_api_docs
+// NOTE: This file is generated and may not follow lint rules defined in your app
+// Generated files can be excluded from analysis in analysis_options.yaml
+// For more info, see: https://dart.dev/guides/language/analysis-options#excluding-code-from-analysis
+
+// ignore_for_file: public_member_api_docs, file_names, unnecessary_new, prefer_if_null_operators, prefer_const_constructors, slash_for_doc_comments, annotate_overrides, non_constant_identifier_names, unnecessary_string_interpolations, prefer_adjacent_string_concatenation, unnecessary_const, dead_code
 
 import 'ModelProvider.dart';
 import 'package:amplify_datastore_plugin_interface/amplify_datastore_plugin_interface.dart';
 import 'package:flutter/foundation.dart';
-import "Allergens.dart";
-
 
 
 /** This is an auto generated class representing the Customer type in your schema. */
@@ -28,7 +30,7 @@ class Customer extends Model {
   static const classType = const _CustomerModelType();
   final String id;
   final int? _communicationPreference;
-  final Allergens? _allergens;
+  final String? _allergens;
   final String? _restaurantID;
   final User? _user;
 
@@ -44,7 +46,7 @@ class Customer extends Model {
     return _communicationPreference;
   }
   
-  Allergens? get allergens {
+  String? get allergens {
     return _allergens;
   }
   
@@ -62,7 +64,7 @@ class Customer extends Model {
   
   const Customer._internal({required this.id, communicationPreference, allergens, restaurantID, required user}): _communicationPreference = communicationPreference, _allergens = allergens, _restaurantID = restaurantID, _user = user;
   
-  factory Customer({String? id, int? communicationPreference, Allergens? allergens, String? restaurantID, required User user}) {
+  factory Customer({String? id, int? communicationPreference, String? allergens, String? restaurantID, required User user}) {
     return Customer._internal(
       id: id == null ? UUID.getUUID() : id,
       communicationPreference: communicationPreference,
@@ -96,7 +98,7 @@ class Customer extends Model {
     buffer.write("Customer {");
     buffer.write("id=" + "$id" + ", ");
     buffer.write("communicationPreference=" + (_communicationPreference != null ? _communicationPreference!.toString() : "null") + ", ");
-    buffer.write("allergens=" + (_allergens != null ? _allergens!.toString() : "null") + ", ");
+    buffer.write("allergens=" + "$_allergens" + ", ");
     buffer.write("restaurantID=" + "$_restaurantID" + ", ");
     buffer.write("user=" + (_user != null ? _user!.toString() : "null"));
     buffer.write("}");
@@ -104,7 +106,7 @@ class Customer extends Model {
     return buffer.toString();
   }
   
-  Customer copyWith({String? id, int? communicationPreference, Allergens? allergens, String? restaurantID, User? user}) {
+  Customer copyWith({String? id, int? communicationPreference, String? allergens, String? restaurantID, User? user}) {
     return Customer(
       id: id ?? this.id,
       communicationPreference: communicationPreference ?? this.communicationPreference,
@@ -115,7 +117,7 @@ class Customer extends Model {
   
   Customer.fromJson(Map<String, dynamic> json)  
     : id = json['id'],
-      _communicationPreference = json['communicationPreference'],
+      _communicationPreference = (json['communicationPreference'] as num?)?.toInt(),
       _allergens = json['allergens'],
       _restaurantID = json['restaurantID'],
       _user = json['user']?['serializedData'] != null

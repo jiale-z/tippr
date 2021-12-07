@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:prototype_1/models/ModelProvider.dart';
-import 'package:prototype_1/models/ServerBio.dart';
 import 'package:amplify_flutter/amplify.dart';
 import 'package:prototype_1/view_model/session.dart';
 

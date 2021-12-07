@@ -13,12 +13,15 @@
 * permissions and limitations under the License.
 */
 
-// ignore_for_file: public_member_api_docs
+// NOTE: This file is generated and may not follow lint rules defined in your app
+// Generated files can be excluded from analysis in analysis_options.yaml
+// For more info, see: https://dart.dev/guides/language/analysis-options#excluding-code-from-analysis
+
+// ignore_for_file: public_member_api_docs, file_names, unnecessary_new, prefer_if_null_operators, prefer_const_constructors, slash_for_doc_comments, annotate_overrides, non_constant_identifier_names, unnecessary_string_interpolations, prefer_adjacent_string_concatenation, unnecessary_const, dead_code
 
 import 'ModelProvider.dart';
 import 'package:amplify_datastore_plugin_interface/amplify_datastore_plugin_interface.dart';
 import 'package:flutter/foundation.dart';
-import "ServerBio.dart";
 
 
 /** This is an auto generated class representing the Server type in your schema. */
@@ -28,7 +31,8 @@ class Server extends Model {
   final String id;
   final User? _user;
   final String? _restaurantID;
-  final ServerBio? _bio;
+  final String? _bio;
+  final String? _picture;
 
   @override
   getInstanceType() => classType;
@@ -50,18 +54,23 @@ class Server extends Model {
     return _restaurantID;
   }
   
-  ServerBio? get bio {
+  String? get bio {
     return _bio;
   }
   
-  const Server._internal({required this.id, required user, restaurantID, bio}): _user = user, _restaurantID = restaurantID, _bio = bio;
+  String? get picture {
+    return _picture;
+  }
   
-  factory Server({String? id, required User user, String? restaurantID, ServerBio? bio}) {
+  const Server._internal({required this.id, required user, restaurantID, bio, picture}): _user = user, _restaurantID = restaurantID, _bio = bio, _picture = picture;
+  
+  factory Server({String? id, required User user, String? restaurantID, String? bio, String? picture}) {
     return Server._internal(
       id: id == null ? UUID.getUUID() : id,
       user: user,
       restaurantID: restaurantID,
-      bio: bio);
+      bio: bio,
+      picture: picture);
   }
   
   bool equals(Object other) {
@@ -75,7 +84,8 @@ class Server extends Model {
       id == other.id &&
       _user == other._user &&
       _restaurantID == other._restaurantID &&
-      _bio == other._bio;
+      _bio == other._bio &&
+      _picture == other._picture;
   }
   
   @override
@@ -89,18 +99,20 @@ class Server extends Model {
     buffer.write("id=" + "$id" + ", ");
     buffer.write("user=" + (_user != null ? _user!.toString() : "null") + ", ");
     buffer.write("restaurantID=" + "$_restaurantID" + ", ");
-    buffer.write("bio=" + (_bio != null ? _bio!.toString() : "null"));
+    buffer.write("bio=" + "$_bio" + ", ");
+    buffer.write("picture=" + "$_picture");
     buffer.write("}");
     
     return buffer.toString();
   }
   
-  Server copyWith({String? id, User? user, String? restaurantID, ServerBio? bio}) {
+  Server copyWith({String? id, User? user, String? restaurantID, String? bio, String? picture}) {
     return Server(
       id: id ?? this.id,
       user: user ?? this.user,
       restaurantID: restaurantID ?? this.restaurantID,
-      bio: bio ?? this.bio);
+      bio: bio ?? this.bio,
+      picture: picture ?? this.picture);
   }
   
   Server.fromJson(Map<String, dynamic> json)  
@@ -109,10 +121,11 @@ class Server extends Model {
         ? User.fromJson(new Map<String, dynamic>.from(json['user']['serializedData']))
         : null,
       _restaurantID = json['restaurantID'],
-      _bio = json['bio'];
+      _bio = json['bio'],
+      _picture = json['picture'];
   
   Map<String, dynamic> toJson() => {
-    'id': id, 'user': _user?.toJson(), 'restaurantID': _restaurantID, 'bio': _bio
+    'id': id, 'user': _user?.toJson(), 'restaurantID': _restaurantID, 'bio': _bio, 'picture': _picture
   };
 
   static final QueryField ID = QueryField(fieldName: "server.id");
@@ -121,6 +134,7 @@ class Server extends Model {
     fieldType: ModelFieldType(ModelFieldTypeEnum.model, ofModelName: (User).toString()));
   static final QueryField RESTAURANTID = QueryField(fieldName: "restaurantID");
   static final QueryField BIO = QueryField(fieldName: "bio");
+  static final QueryField PICTURE = QueryField(fieldName: "picture");
   static var schema = Model.defineSchema(define: (ModelSchemaDefinition modelSchemaDefinition) {
     modelSchemaDefinition.name = "Server";
     modelSchemaDefinition.pluralName = "Servers";
@@ -153,6 +167,12 @@ class Server extends Model {
     
     modelSchemaDefinition.addField(ModelFieldDefinition.field(
       key: Server.BIO,
+      isRequired: false,
+      ofType: ModelFieldType(ModelFieldTypeEnum.string)
+    ));
+    
+    modelSchemaDefinition.addField(ModelFieldDefinition.field(
+      key: Server.PICTURE,
       isRequired: false,
       ofType: ModelFieldType(ModelFieldTypeEnum.string)
     ));
