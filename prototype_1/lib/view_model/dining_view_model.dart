@@ -52,7 +52,8 @@ class DiningViewModel with ChangeNotifier {
       var list = await Amplify.DataStore.query(Restaurant.classType,
           where: Restaurant.RESTAURANTCODE.eq(code));
       _restaurant = list[0];
-      _servers = _restaurant!.servers;
+      _servers = await Amplify.DataStore.query(Server.classType,
+          where: Server.RESTAURANTID.eq(list[0].getId()));
     } catch (e) {
       print(e);
     }

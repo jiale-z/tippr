@@ -46,15 +46,18 @@ class _AttentionWidgetState extends State<AttentionWidget> {
       onTap: _handleTap,
       child: Container(
         child: Center(
-          child: Text(
-            _active ? 'Assistance' : 'Dining:)',
-            style: const TextStyle(fontSize: 32.0, color: Colors.white),
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(90, 0, 0, 0),
+            child: Text(
+              _active ? 'Assistance' : 'Do Not Disturb',
+              style: const TextStyle(fontSize: 32.0, color: Colors.white),
+            ),
           ),
         ),
         width: MediaQuery.of(context).size.width * 0.99,
         height: MediaQuery.of(context).size.height * 0.99,
         decoration: BoxDecoration(
-          color: _active ? Colors.red[700] : Colors.grey[600],
+          color: _active ? Colors.green[400] : Colors.red[500],
         ),
       ),
     );

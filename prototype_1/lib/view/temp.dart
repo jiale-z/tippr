@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'attention_widget.dart';
+import 'package:provider/provider.dart';
+import '../view_model/dining_view_model.dart';
+import '../models/Server.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TEMPDiningPage extends StatefulWidget {
   @override
@@ -19,63 +23,115 @@ class _TEMPDiningPageState extends State<TEMPDiningPage> {
   }
 
   Widget buildIconColumn(BuildContext context) {
+    List<bool> allergens =
+        Provider.of<DiningViewModel>(context).customer!.allergens!;
     return Container(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Container(
-            child: Image.asset('assets/milk.png'),
-            height: MediaQuery.of(context).size.height * .08,
-            width: MediaQuery.of(context).size.width * .2,
-          ),
-          SizedBox(height: 5),
-          Container(
-            child: Image.asset('assets/eggs.png'),
-            height: MediaQuery.of(context).size.height * .07,
-            width: MediaQuery.of(context).size.width * .2,
-          ),
-          SizedBox(height: 5),
-          Container(
-            child: Image.asset('assets/fish.png'),
-            height: MediaQuery.of(context).size.height * .05,
-            width: MediaQuery.of(context).size.width * .12,
-          ),
-          SizedBox(height: 5),
-          Container(
-            child: Image.asset('assets/peanuts.png'),
-            height: MediaQuery.of(context).size.height * .05,
-            width: MediaQuery.of(context).size.width * .15,
-          ),
-          SizedBox(height: 6),
-          Container(
-            child: Image.asset('assets/sesame.png'),
-            height: MediaQuery.of(context).size.height * .05,
-            width: MediaQuery.of(context).size.width * .12,
-          ),
-          SizedBox(height: 9),
-          Container(
-            child: Image.asset('assets/shellfish.png'),
-            height: MediaQuery.of(context).size.height * .05,
-            width: MediaQuery.of(context).size.width * .15,
-          ),
-          SizedBox(height: 6),
-          Container(
-            child: Image.asset('assets/soy.png'),
-            height: MediaQuery.of(context).size.height * .05,
-            width: MediaQuery.of(context).size.width * .2,
-          ),
-          SizedBox(height: 6),
-          Container(
-            child: Image.asset('assets/treenuts.png'),
-            height: MediaQuery.of(context).size.height * .05,
-            width: MediaQuery.of(context).size.width * .2,
-          ),
-          SizedBox(height: 6),
-          Container(
-            child: Image.asset('assets/wheat.png'),
-            height: MediaQuery.of(context).size.height * .05,
-            width: MediaQuery.of(context).size.width * .2,
-          ),
+          (allergens[0])
+              ? Column(
+                  children: [
+                    Container(
+                      child: Image.asset('assets/milk.png'),
+                      height: MediaQuery.of(context).size.height * .08,
+                      width: MediaQuery.of(context).size.width * .2,
+                    ),
+                    SizedBox(height: 5)
+                  ],
+                )
+              : Container(),
+          (allergens[1])
+              ? Column(
+                  children: [
+                    Container(
+                      child: Image.asset('assets/eggs.png'),
+                      height: MediaQuery.of(context).size.height * .07,
+                      width: MediaQuery.of(context).size.width * .2,
+                    ),
+                    SizedBox(height: 5),
+                  ],
+                )
+              : Container(),
+          (allergens[2])
+              ? Column(
+                  children: [
+                    Container(
+                      child: Image.asset('assets/fish.png'),
+                      height: MediaQuery.of(context).size.height * .05,
+                      width: MediaQuery.of(context).size.width * .12,
+                    ),
+                    SizedBox(height: 5),
+                  ],
+                )
+              : Container(),
+          (allergens[3])
+              ? Column(
+                  children: [
+                    Container(
+                      child: Image.asset('assets/shellfish.png'),
+                      height: MediaQuery.of(context).size.height * .05,
+                      width: MediaQuery.of(context).size.width * .15,
+                    ),
+                    SizedBox(height: 6),
+                  ],
+                )
+              : Container(),
+          (allergens[4])
+              ? Column(
+                  children: [
+                    Container(
+                      child: Image.asset('assets/treenuts.png'),
+                      height: MediaQuery.of(context).size.height * .05,
+                      width: MediaQuery.of(context).size.width * .2,
+                    ),
+                    SizedBox(height: 6),
+                  ],
+                )
+              : Container(),
+          (allergens[5])
+              ? Column(
+                  children: [
+                    Container(
+                      child: Image.asset('assets/peanuts.png'),
+                      height: MediaQuery.of(context).size.height * .05,
+                      width: MediaQuery.of(context).size.width * .15,
+                    ),
+                    SizedBox(height: 6),
+                  ],
+                )
+              : Container(),
+          (allergens[6])
+              ? Column(
+                  children: [
+                    Container(
+                      child: Image.asset('assets/wheat.png'),
+                      height: MediaQuery.of(context).size.height * .05,
+                      width: MediaQuery.of(context).size.width * .2,
+                    ),
+                    SizedBox(height: 6),
+                  ],
+                )
+              : Container(),
+          (allergens[7])
+              ? Column(
+                  children: [
+                    Container(
+                      child: Image.asset('assets/soy.png'),
+                      height: MediaQuery.of(context).size.height * .05,
+                      width: MediaQuery.of(context).size.width * .2,
+                    ),
+                    SizedBox(height: 9),
+                  ],
+                )
+              : Container(),
+          (allergens[8])
+              ? Container(
+                  child: Image.asset('assets/sesame.png'),
+                  height: MediaQuery.of(context).size.height * .05,
+                  width: MediaQuery.of(context).size.width * .12,
+                )
+              : Container(),
         ],
       ),
     );
@@ -111,6 +167,47 @@ class _TEMPDiningPageState extends State<TEMPDiningPage> {
     ),
   );
 
+  generateListTiles() {
+    List<Server> servers = Provider.of<DiningViewModel>(context).servers!;
+    return servers
+        .map((server) => ListTile(
+              leading: Icon(Icons.input),
+              title: Text(server.user.name!),
+              onTap: () => {
+                showDialog(
+                    context: context,
+                    builder: (context) => AlertDialog(
+                          title: Text(server.user.name!),
+                          content: SingleChildScrollView(
+                            child: ListBody(
+                              children: <Widget>[
+                                Text(server.bio!),
+                              ],
+                            ),
+                          ),
+                          actions: <Widget>[
+                            TextButton(
+                              child: const Text('Close'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        ))
+              },
+            ))
+        .toList();
+  }
+
+  _openMenu() async {
+    String url = Provider.of<DiningViewModel>(context).restaurant!.menu!;
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -126,6 +223,20 @@ class _TEMPDiningPageState extends State<TEMPDiningPage> {
             onPressed: () => Navigator.of(context).pop(),
           ),
         ),
+        drawer: Drawer(
+            child: ListView(padding: EdgeInsets.zero, children: <Widget>[
+          DrawerHeader(
+              child: Text(
+                'Servers',
+                style: TextStyle(color: Colors.white, fontSize: 25),
+              ),
+              decoration: BoxDecoration(
+                color: Colors.blue,
+              )),
+          (Provider.of<DiningViewModel>(context).servers == null)
+              ? Text("No Restaurant Connected")
+              : generateListTiles(),
+        ])),
         body: Container(
           margin: EdgeInsets.only(top: 1, left: 1, right: 1, bottom: 1),
           //width: MediaQuery.of(context).size.width /* * .99 */,
@@ -161,17 +272,23 @@ class _TEMPDiningPageState extends State<TEMPDiningPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: const Text('Menu'),
-                        style: defaultBtn,
-                      ),
+                      (Provider.of<DiningViewModel>(context).restaurant == null)
+                          ? Text("Menu")
+                          : ElevatedButton(
+                              onPressed: () {
+                                _openMenu();
+                              },
+                              child: const Text('Menu'),
+                              style: defaultBtn,
+                            ),
                       const SizedBox(width: 36),
-                      ElevatedButton(
-                        onPressed: () {},
-                        child: const Text('Servers'),
-                        style: defaultBtn,
-                      ),
+                      (Provider.of<DiningViewModel>(context).servers == null)
+                          ? Text("Servers")
+                          : ElevatedButton(
+                              onPressed: () {},
+                              child: const Text('Servers'),
+                              style: defaultBtn,
+                            ),
                     ],
                   ),
                 ),
