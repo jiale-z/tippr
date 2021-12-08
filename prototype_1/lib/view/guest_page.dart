@@ -192,7 +192,18 @@ class _GuestPageState extends State<GuestPage> {
                     borderRadius: BorderRadius.circular(20)),
                 child: MaterialButton(
                   onPressed: () {
-                    dining();
+                    if (_nameController.text.isEmpty) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                              title: Text('Name Field Cannot Be Empty'));
+                        },
+                      );
+                    } else {
+                      dining();
+                    }
+
                     // Navigator.push(
                     //     context, MaterialPageRoute(builder: (_) => HomePage()));
                   },

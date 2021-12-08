@@ -7,6 +7,7 @@ import './home_page.dart';
 import 'package:flutter/widgets.dart';
 import './dining_page.dart';
 import 'package:provider/provider.dart';
+import './guest_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -137,7 +138,15 @@ class _LoginPageState extends State<LoginPage> {
                 onPressed: () {
                   register();
                 },
-                child: Text("New to Tippr? Create an Account"))
+                child: Text("New to Tippr? Create an Account")),
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.05,
+            ),
+            TextButton(
+                onPressed: () {
+                  guest();
+                },
+                child: Text("Don't Want to Make an Account? Continue as Guest"))
           ],
         ),
       ),
@@ -158,5 +167,10 @@ class _LoginPageState extends State<LoginPage> {
   register() {
     Navigator.push(
         context, MaterialPageRoute(builder: (context) => RegistrationPage()));
+  }
+
+  guest() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => GuestPage()));
   }
 }
