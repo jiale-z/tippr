@@ -44,7 +44,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
-
     // List<ListItem> _userroles = [
     //   ListItem(id: 1, name: 'Customer'),
     //   ListItem(id: 2, name: 'Server'),
@@ -180,56 +179,72 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: MaterialButton(
                 onPressed: () {
-                  registration(_emailController.text, _passwordController.text, _nameController.text);
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      // return Dialog(
-                      //   shape: RoundedRectangleBorder(
-                      //       borderRadius: BorderRadius.circular(40)),
-                      //   elevation: 16,
-                      //   child: Container(
-                      //     child: ListView(
-                      //       shrinkWrap: true,
-                      //       children: <Widget>[
-                      //         AlertDialog(
-                      //           title: Text('TextField in Dialog'),
-                      //           content: TextField(
-                      //             onChanged: (value) {},
-                      //             decoration: InputDecoration(
-                      //                 hintText: "Text Field in Dialog"),
-                      //           ),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // );
-                      return AlertDialog(
-                        title: Text('Enter Confirmation Code Sent To Email'),
-                        content: TextField(
-                          controller: _codeController,
-                          onChanged: (value) {},
-                          decoration: InputDecoration(
-                              hintText:
-                                  "Enter Confirmation Code Sent To Email"),
-                        ),
-                        actions: <Widget>[
-                          MaterialButton(
-                            color: Colors.blue,
-                            textColor: Colors.white,
-                            child: Text('OK'),
-                            onPressed: () {
-                              setState(() {
-                                codeDialog = valueText;
-                                Navigator.pop(context);
-                                checkCode(_codeController.text);
-                              });
-                            },
+                  if (_emailController.text.isEmpty ||
+                      _passwordController.text.isEmpty ||
+                      _nameController.text.isEmpty ||
+                      selected.isEmpty) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                            title: Text(
+                                'Name, Email, and Password Fields Cannot Be Empty'));
+                      },
+                    );
+                  } else {
+                    registration(_emailController.text,
+                        _passwordController.text, _nameController.text);
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        // return Dialog(
+                        //   shape: RoundedRectangleBorder(
+                        //       borderRadius: BorderRadius.circular(40)),
+                        //   elevation: 16,
+                        //   child: Container(
+                        //     child: ListView(
+                        //       shrinkWrap: true,
+                        //       children: <Widget>[
+                        //         AlertDialog(
+                        //           title: Text('TextField in Dialog'),
+                        //           content: TextField(
+                        //             onChanged: (value) {},
+                        //             decoration: InputDecoration(
+                        //                 hintText: "Text Field in Dialog"),
+                        //           ),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // );
+                        return AlertDialog(
+                          title: Text('Enter Confirmation Code Sent To Email'),
+                          content: TextField(
+                            controller: _codeController,
+                            onChanged: (value) {},
+                            decoration: InputDecoration(
+                                hintText:
+                                    "Enter Confirmation Code Sent To Email"),
                           ),
-                        ],
-                      );
-                    },
-                  );
+                          actions: <Widget>[
+                            MaterialButton(
+                              color: Colors.blue,
+                              textColor: Colors.white,
+                              child: Text('OK'),
+                              onPressed: () {
+                                setState(() {
+                                  codeDialog = valueText;
+                                  Navigator.pop(context);
+                                  checkCode(_codeController.text);
+                                });
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+
                   //               showDialog(
                   //                 context:context,
                   //                 builder: (context) {
@@ -263,7 +278,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
     //check confirmation code here
     //if good continue to registration (just put registration()),
     //else write message saying wrong code
-    bool confirmResults = await Provider.of<LoginViewModel>(context, listen: false).confirmRegistration(code);
+    bool confirmResults =
+        await Provider.of<LoginViewModel>(context, listen: false)
+            .confirmRegistration(code);
 
     if (confirmResults) {
       role_registration();
@@ -272,8 +289,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   registration(String email, String password, String name) async {
     print(email);
-    await Provider.of<LoginViewModel>(context, listen: false).register(email, password, name);
-
+    await Provider.of<LoginViewModel>(context, listen: false)
+        .register(email, password, name);
   }
 
   role_registration() {
