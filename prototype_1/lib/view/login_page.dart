@@ -9,7 +9,6 @@ import './dining_page.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
-
   @override
   _LoginPageState createState() => _LoginPageState();
 
@@ -20,7 +19,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
 
@@ -110,7 +108,19 @@ class _LoginPageState extends State<LoginPage> {
                   color: Colors.blue, borderRadius: BorderRadius.circular(20)),
               child: MaterialButton(
                 onPressed: () {
-                  login(_emailController.text, _passwordController.text);
+                  if (_emailController.text.isEmpty ||
+                      _passwordController.text.isEmpty) {
+                    showDialog(
+                      context: context,
+                      builder: (context) {
+                        return AlertDialog(
+                            title: Text(
+                                'Email and Password Fields Cannot Be Empty'));
+                      },
+                    );
+                  } else {
+                    login(_emailController.text, _passwordController.text);
+                  }
                   // Navigator.push(
                   //     context, MaterialPageRoute(builder: (_) => HomePage()));
                 },
@@ -136,7 +146,9 @@ class _LoginPageState extends State<LoginPage> {
 
   login(String email, String password) async {
     //call viewmodel here
-    bool loginresults = await Provider.of<LoginViewModel>(context, listen: false).login(email, password);
+    bool loginresults =
+        await Provider.of<LoginViewModel>(context, listen: false)
+            .login(email, password);
     if (loginresults) {
       Navigator.push(
           context, MaterialPageRoute(builder: (context) => DiningPage()));
