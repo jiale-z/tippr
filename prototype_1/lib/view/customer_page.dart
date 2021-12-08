@@ -179,7 +179,8 @@ class _CustomerPageState extends State<CustomerPage> {
   login() {
     //call viewmodel here
 
-    Provider.of<RoleRegViewModel>(context, listen: false).registerCustomer(level.toInt(), selected);
+    Provider.of<RoleRegViewModel>(context, listen: false)
+        .registerCustomer(level.toInt(), selected);
 
     //would need to check roles on each page (customer, server, and rest rep)
     //to determine what the next page should be

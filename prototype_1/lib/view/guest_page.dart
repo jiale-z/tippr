@@ -19,7 +19,7 @@ class _GuestPageState extends State<GuestPage> {
   double level = 1;
   double newLevel = 1;
   List<String> selected = [];
-  final nameController = TextEditingController();
+  final _nameController = TextEditingController();
 
   var currValue;
 
@@ -70,7 +70,7 @@ class _GuestPageState extends State<GuestPage> {
               //padding: const EdgeInsets.only(left:15.0,right: 15.0,top:0,bottom: 0),
               padding: EdgeInsets.symmetric(horizontal: 15),
               child: TextField(
-                controller: nameController,
+                controller: _nameController,
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Preferred Name',

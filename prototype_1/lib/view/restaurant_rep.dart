@@ -105,7 +105,19 @@ class _RestaurantRepPageState extends State<RestaurantRepPage> {
                     borderRadius: BorderRadius.circular(20)),
                 child: MaterialButton(
                   onPressed: () {
-                    continue_home_page();
+                    if (_restaurantController.text.isEmpty ||
+                        _menuController.text.isEmpty) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                              title: Text(
+                                  'Restaurant and Menu Fields Cannot Be Empty'));
+                        },
+                      );
+                    } else {
+                      continue_home_page();
+                    }
                     // Navigator.push(
                     //     context, MaterialPageRoute(builder: (_) => HomePage()));
                   },
@@ -125,7 +137,8 @@ class _RestaurantRepPageState extends State<RestaurantRepPage> {
   continue_home_page() {
     //call viewmodel here to save link
 
-    Provider.of<RoleRegViewModel>(context, listen: false).registerRestaurant(_restaurantController.text, _menuController.text);
+    Provider.of<RoleRegViewModel>(context, listen: false)
+        .registerRestaurant(_restaurantController.text, _menuController.text);
 
     //dont need to check for next page here
 

@@ -62,9 +62,9 @@ class _ServerPageState extends State<ServerPage> {
               child: TextField(
                 controller: _codeController,
                 decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Restaurant Code',
-                    hintText: 'Enter your restaurant code',
+                  border: OutlineInputBorder(),
+                  labelText: 'Restaurant Code',
+                  hintText: 'Enter your restaurant code',
                 ),
               ),
             ),
@@ -106,7 +106,19 @@ class _ServerPageState extends State<ServerPage> {
                     borderRadius: BorderRadius.circular(20)),
                 child: MaterialButton(
                   onPressed: () {
-                    continue_to_image();
+                    if (_codeController.text.isEmpty ||
+                        _bioController.text.isEmpty) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                              title:
+                                  Text('Code and Bio Fields Cannot Be Empty'));
+                        },
+                      );
+                    } else {
+                      continue_to_image();
+                    }
                     // Navigator.push(
                     //     context, MaterialPageRoute(builder: (_) => HomePage()));
                   },
@@ -127,7 +139,8 @@ class _ServerPageState extends State<ServerPage> {
     //call viewmodel here
 
     //look at customer_page, check for rep here
-    Provider.of<RoleRegViewModel>(context, listen: false).registerServer(_codeController.text, _bioController.text, null);
+    Provider.of<RoleRegViewModel>(context, listen: false)
+        .registerServer(_codeController.text, _bioController.text, null);
 
     Navigator.pop(context);
   }
