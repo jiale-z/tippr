@@ -47,7 +47,8 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text("Login Page"),
+        centerTitle: true,
+        title: Text("Login"),
         automaticallyImplyLeading: false,
       ),
       body: SingleChildScrollView(
@@ -75,7 +76,7 @@ class _LoginPageState extends State<LoginPage> {
                 decoration: InputDecoration(
                     border: OutlineInputBorder(),
                     labelText: 'Email',
-                    hintText: 'Enter valid email id as abc@gmail.com'),
+                    hintText: 'example@email.com'),
               ),
             ),
             Padding(
@@ -120,7 +121,7 @@ class _LoginPageState extends State<LoginPage> {
                       },
                     );
                   } else {
-                    login(_emailController.text, _passwordController.text);
+                    login(_emailController, _passwordController);
                   }
                   // Navigator.push(
                   //     context, MaterialPageRoute(builder: (_) => HomePage()));
@@ -153,14 +154,17 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  login(String email, String password) async {
+  login(TextEditingController emailController,
+      TextEditingController passwordController) async {
     //call viewmodel here
     bool loginresults =
         await Provider.of<LoginViewModel>(context, listen: false)
-            .login(email, password);
+            .login(emailController.text, passwordController.text);
     if (loginresults) {
+      emailController.text = '';
+      passwordController.text = '';
       Navigator.push(
-          context, MaterialPageRoute(builder: (context) => DiningPage()));
+          context, MaterialPageRoute(builder: (context) => HomePage()));
     }
   }
 

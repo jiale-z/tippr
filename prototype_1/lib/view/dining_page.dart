@@ -202,7 +202,7 @@ class _DiningPageState extends State<DiningPage> {
   }
 
   _openMenu() async {
-    String url =
+    String url = "https://" +
         Provider.of<DiningViewModel>(context, listen: false).restaurant!.menu!;
     //if (await canLaunch(url)) {
     await launch(url);
@@ -257,13 +257,15 @@ class _DiningPageState extends State<DiningPage> {
           ));
     }
     return MaterialApp(
-      title: 'TIPPR_S4 demo',
+      title: 'TIPPR_FINAL',
       home: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          backgroundColor: Color(0x44000000),
+          centerTitle: true,
           elevation: 0,
-          title: const Text('Dine_TEMP'),
+          title: (Provider.of<DiningViewModel>(context).restaurant == null)
+              ? const Text('Dine')
+              : Text(Provider.of<DiningViewModel>(context).restaurant!.title),
           leading: IconButton(
             icon: const Icon(Icons.arrow_back_ios),
             tooltip: 'Back',

@@ -43,10 +43,10 @@ class LoginViewModel with ChangeNotifier {
 
   Future<bool> login(String email, String password) async {
     var list = [];
+    email = email.toLowerCase();
     try {
       await Amplify.Auth.signOut();
-    }
-    catch (e) {
+    } catch (e) {
       print(e.toString());
     }
     try {
@@ -121,9 +121,8 @@ class LoginViewModel with ChangeNotifier {
     var temp;
     try {
       temp = await Amplify.Auth.getCurrentUser();
-      print("AAA"+ temp);
-    }
-    catch (e) {
+      print("AAA" + temp);
+    } catch (e) {
       print("BBB" + e.toString());
     }
     if (temp == null) {

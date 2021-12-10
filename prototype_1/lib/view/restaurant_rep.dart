@@ -29,6 +29,8 @@ class _RestaurantRepPageState extends State<RestaurantRepPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        automaticallyImplyLeading: false,
         title: Text('Restaurant Rep Registration'),
       ),
       body: SingleChildScrollView(

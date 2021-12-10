@@ -27,19 +27,31 @@ class HomeViewModel with ChangeNotifier {
     return _cust;
   }
 
+  Future<void> logout() async {
+    try {
+      await Amplify.Auth.signOut();
+      Session().setUser(User(id: '', name: '', email: ''));
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
   //This function should be called on the initialization of the first page of the app. It will retrieve the current User's data and update the user field
   Future<void> fetchUserData() async {
-    if (_user == null) {
-      return;
-    }
+    _cust = null;
+    _server = null;
+    _rest = null;
+    _user = Session().user;
     try {
+      print("USER" + _user!.name!);
       var list = await Amplify.DataStore.query(Customer.classType,
           where: Customer.USER.eq(_user!.id));
       if (list.isNotEmpty) {
         _cust = list[0];
+        print(_cust.toString());
       }
     } catch (e) {
-      print(e);
+      print("CUSTOMER" + e.toString());
     }
     try {
       var list = await Amplify.DataStore.query(Restaurant.classType,
@@ -48,7 +60,7 @@ class HomeViewModel with ChangeNotifier {
         _rest = list[0];
       }
     } catch (e) {
-      print(e);
+      print("RESTAURANT" + e.toString());
     }
     try {
       var list = await Amplify.DataStore.query(Server.classType,
@@ -57,9 +69,8 @@ class HomeViewModel with ChangeNotifier {
         _server = list[0];
       }
     } catch (e) {
-      print(e);
+      print("SERVER" + e.toString());
     }
-
     //This call is what triggers the Views to update whenever this ViewModel changes
     notifyListeners();
   }

@@ -29,6 +29,8 @@ class _ServerPageState extends State<ServerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
+        automaticallyImplyLeading: false,
         title: Text('Server Registration'),
       ),
       body: SingleChildScrollView(

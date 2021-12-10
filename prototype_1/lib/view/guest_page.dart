@@ -33,6 +33,7 @@ class _GuestPageState extends State<GuestPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         title: Text('Guest'),
       ),
       body: SingleChildScrollView(

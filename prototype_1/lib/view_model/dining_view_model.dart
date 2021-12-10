@@ -35,6 +35,9 @@ class DiningViewModel with ChangeNotifier {
 
   // This should be called on page initialization (initState function)
   Future<void> fetchUserData() async {
+    _customer = null;
+    _restaurant = null;
+    _servers = null;
     try {
       var list = await Amplify.DataStore.query(Customer.classType,
           where: Customer.USER.eq(_user!.id));

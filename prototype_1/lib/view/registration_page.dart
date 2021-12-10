@@ -53,6 +53,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        centerTitle: true,
         title: Text("Registration Page"),
         automaticallyImplyLeading: true,
       ),
@@ -296,7 +297,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
   role_registration() {
     //call viewmodel here _selecteduserroles has data
 
-    Navigator.push(context, MaterialPageRoute(builder: (_) => DiningPage()));
+    Navigator.push(context, MaterialPageRoute(builder: (_) => HomePage()));
 
     //need to change paths later
     if (selected.isNotEmpty) {
