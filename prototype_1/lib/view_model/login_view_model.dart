@@ -72,7 +72,7 @@ class LoginViewModel with ChangeNotifier {
   }
 
   Future<bool> register(String email, String password, String name) async {
-    userTemp = User(email: email, name: name);
+    userTemp = User(email: email.toLowerCase(), name: name);
 
     try {
       Map<String, String> userAttributes = {
